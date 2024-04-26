@@ -1,4 +1,0 @@
-﻿  tank.cpp
-C:\Users\hp\OneDrive\سطح المكتب\project\Git\Alien_Invasion\ph12_team9\data_structure\tank.cpp(43,35): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\hp\OneDrive\سطح المكتب\project\Git\Alien_Invasion\ph12_team9\data_structure\tank.cpp(85,34): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-  test.vcxproj -> C:\Users\hp\OneDrive\سطح المكتب\project\Git\Alien_Invasion\ph12_team9\x64\Debug\test.exe
