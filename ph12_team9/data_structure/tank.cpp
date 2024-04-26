@@ -58,7 +58,7 @@ void tank::Attack()
 	 
 	//print the attacked AllienSoldiers
 	AllienSoldier* as;
-	cout << "ET " << this->ID << " shots [";        //--> print the attacked units
+	cout << "ET " << this->ID << " shots [ ";        //--> print the attacked units
 	while (print_AS.dequeue(as))
 	{
 		cout << as->getID() << " ";

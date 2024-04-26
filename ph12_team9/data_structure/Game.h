@@ -24,7 +24,8 @@ public:
 	void generate();
 	void increament_time();
 	int  get_current_time();
-	void test();
+	//void test();
+	void simulate();
 	bool loadFromInput(string fileName);
 	void add_to_killed_list(armyUnit* unit);
 	AlienArmy* get_aliens_pointer();

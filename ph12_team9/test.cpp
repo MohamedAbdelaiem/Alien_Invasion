@@ -6,8 +6,14 @@
 using namespace std;
 int main()
 {
-	Game g1("generate");
-	g1.test();
+	
+	string fileName;
+	cout << "Enter the file name: ";
+	cin >> fileName;
+	cout << endl;
+	Game g1(fileName);
+	for(int i=0;i<50;i++)
+	g1.simulate();
 	return 0;
 }
 

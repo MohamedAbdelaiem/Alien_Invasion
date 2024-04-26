@@ -58,7 +58,6 @@ void AlienArmy::deleteUnit(armyUnit*& unit)
 
 void AlienArmy::print()
 {
-	cout << "==============Alien Army Alive Units=======================" << endl;
 	cout << allien_soldier->get_count() << " AS ";
 	allien_soldier->print_list();
 	cout << array_monsters->get_count() << " AM "; 

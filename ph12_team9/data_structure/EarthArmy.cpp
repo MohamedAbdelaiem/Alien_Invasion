@@ -55,7 +55,7 @@ void EarthArmy::deleteUnit(armyUnit*& unit)
 
 void EarthArmy::print()
 {
-	cout << "==============Earth Army Alive Units=======================" << endl;
+
 	cout << soldiers->get_count() << " ES";         //print soldier list
 	soldiers->print_list();
 
