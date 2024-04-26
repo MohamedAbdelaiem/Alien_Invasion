@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="data_structure">
+      <UniqueIdentifier>{ab747a38-317a-46a5-83a1-f088c25b6ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Armies">
+      <UniqueIdentifier>{450cf11e-7c90-4aa1-a11e-1e0f04d8d9ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Units">
+      <UniqueIdentifier>{55eb8bf8-b1f8-4f6f-8b4e-c6e26cbe6c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rand_generator">
+      <UniqueIdentifier>{5ab16183-c09a-4d35-8f42-ac7112df1c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{b64e9960-53ec-4df4-a0f4-ad3fd32b5ef7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\armyUnit.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\EarthArmy.cpp">
+      <Filter>Armies</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\AlienArmy.cpp">
+      <Filter>Armies</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\monster.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\Drones.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\Rand_Gen.cpp">
+      <Filter>Rand_generator</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\AllienSoldier.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\Gunnery.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\earthSoldier.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\tank.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\Heal_Soldier.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="data_structure\armyUnit.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\Army.h">
+      <Filter>Armies</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\AlienArmy.h">
+      <Filter>Armies</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\EarthArmy.h">
+      <Filter>Armies</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\monster.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\Drones.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\Rand_Gen.h">
+      <Filter>Rand_generator</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\AllienSoldier.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\Array.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\ArrayStack.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\LinkedQueue.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\Node.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\NODE_2.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\priNode.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\priQueue.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\QUEUE.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\QueueADT.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\StackADT.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\Gunnery.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\earthSoldier.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\tank.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\Heal_Soldier.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
