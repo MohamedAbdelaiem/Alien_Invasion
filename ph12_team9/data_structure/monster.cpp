@@ -31,14 +31,17 @@ void monsters::Attack()
 			break;
 		delete E;
 	}
-	cout << "AM " << ID << " shots [ ";
-	while (!print.isEmpty())
+	if (!game_ptr->getSilentMode())
 	{
-		armyUnit* E;
-		print.dequeue(E);
-		cout << E << " ";
+		cout << "AM " << ID << " shots [ ";
+		while (!print.isEmpty())
+		{
+			armyUnit* E;
+			print.dequeue(E);
+			cout << E << " ";
+		}
+		cout << "] ";
 	}
-	cout << "] ";
 	remain = attackCapacity - temp_list_soldiers.get_count();
 	for (int i = 0; i < remain; i++)
 	{
@@ -54,14 +57,17 @@ void monsters::Attack()
 			break;
 		delete E;
 	}
-	cout << "[ ";
-	while (!print.isEmpty())
+	if (!game_ptr->getSilentMode())
 	{
-		armyUnit* E;
-		print.dequeue(E);
-		cout << E<<" ";
+		cout << "[ ";
+		while (!print.isEmpty())
+		{
+			armyUnit* E;
+			print.dequeue(E);
+			cout << E << " ";
+		}
+		cout << "]" << endl;
 	}
-	cout << "]" << endl;
 	while (!temp_list_soldiers.isEmpty())
 	{
 		earthSoldier* ES;

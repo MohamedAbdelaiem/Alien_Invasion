@@ -57,16 +57,19 @@ void tank::Attack()
 	}
 	 
 	//print the attacked AllienSoldiers
-	AllienSoldier* as;
-	cout << "ET " << this->ID << " shots [ ";        //--> print the attacked units
-	while (print_AS.dequeue(as))
+	if (!game_ptr->getSilentMode())
 	{
-		cout << as->getID() << " ";
-	}
-	cout << "]";
-	while (templist_AS.dequeue(as))
-	{
-		alienArmyList->addUnit(as);        // moves all units from templist to its original list
+		AllienSoldier* as;
+		cout << "ET " << this->ID << " shots [ ";        //--> print the attacked units
+		while (print_AS.dequeue(as))
+		{
+			cout << as->getID() << " ";
+		}
+		cout << "]";
+		while (templist_AS.dequeue(as))
+		{
+			alienArmyList->addUnit(as);        // moves all units from templist to its original list
+		}
 	}
 
 	//Attacking the monsters
@@ -98,7 +101,7 @@ void tank::Attack()
 
 	//print the attacked Monsters
 	monsters* am; 
-	print_AM.print_list();          //--> print the attacked units
+	if(!game_ptr->getSilentMode())print_AM.print_list();          //--> print the attacked units
 	while (templist_AM.dequeue(am))
 	{
 		alienArmyList->addUnit(am);        // moves all units from templist to its original list

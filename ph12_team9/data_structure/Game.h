@@ -33,6 +33,7 @@ public:
 	void add_to_killed_list(armyUnit* unit);
 	AlienArmy* get_aliens_pointer();
 	EarthArmy* get_humans_pointer();
+	void generate_output_file();
 	~Game();
 
 

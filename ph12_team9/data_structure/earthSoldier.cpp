@@ -49,8 +49,11 @@ void earthSoldier::Attack()
 	}
 	delete A;
 	AllienSoldier* as;
-	cout << "ES " << this->ID << " shots ";        //--> print the attacked units
-	print.print_list();
+	if (!game_ptr->getSilentMode())
+	{
+		cout << "ES " << this->ID << " shots ";        //--> print the attacked units
+		print.print_list();
+	}
 	while (templist.dequeue(as))
 	{
 		alienArmyList->addUnit(as);        // moves all units from templist to its original list

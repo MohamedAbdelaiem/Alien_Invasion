@@ -6,15 +6,18 @@
 using namespace std;
 int main()
 {
+	ifstream file;
 	string fileName;
 	bool ModeSilent;
 	char mode='h';
-	do {
+	int number;
+	do
+	{
 		cout << "Which mode you want?\n";
 		cout << "A) Silent\nB) Interactive\n";
 		cin >> mode;
-	} while (mode != 'A' && mode != 'a' && mode != 'b' && mode != 'B');
-	if (mode == 'B' || mode == 'b')
+	} while ( tolower(mode) != 'a' && tolower(mode) != 'b' );
+	if (tolower( mode)== 'b')
 	{
 		ModeSilent = false;
 	}
@@ -22,12 +25,31 @@ int main()
 	{
 		ModeSilent = true;
 	}
+	do
+	{
+		cout << "Enter the nummber of rounds greater than or equal 40"<<endl;
+		cin >> number;
+	} while (number < 40);
+	//generate is true
+	while (true)
+	{
 		cout << "Enter the file name: ";
 		cin >> fileName;
 		cout << endl;
-		Game g1(fileName,ModeSilent);
-		for (int i = 0; i < 50; i++)
-			g1.simulate();
+		file.open(fileName+".txt");
+		if (!file.is_open())
+		{
+			cout << "Enter the name again please :"<<endl;
+		}
+		else
+		{
+			break;
+		}
+	}
+	file.close();
+	Game g1(fileName,ModeSilent);
+	for (int i = 0; i < 50; i++)
+		g1.simulate();
 	return 0;
 }
 

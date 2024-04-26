@@ -28,14 +28,17 @@ void Drones::Attack()
 			break;
 		delete E;
 	}
-	cout << "AD " << ID << " shots [ ";
-	while (!print.isEmpty())
+	if (!game_ptr->getSilentMode())
 	{
-		armyUnit* E;
-		print.dequeue(E);
-		cout << E << " ";
+		cout << "AD " << ID << " shots [ ";
+		while (!print.isEmpty())
+		{
+			armyUnit* E;
+			print.dequeue(E);
+			cout << E << " ";
+		}
+		cout << "]";
 	}
-	cout << "]";
 	remain = attackCapacity - temp_list_gunnery.getCount();
 	for (int i = 0; i < remain; i++)
 	{
@@ -51,14 +54,17 @@ void Drones::Attack()
 			break;
 		delete E;
 	}
-	cout << " [ ";
-	while (!print.isEmpty())
+	if (!game_ptr->getSilentMode())
 	{
-		armyUnit* E;
-		print.dequeue(E);
-		cout << E << " ";
+		cout << " [ ";
+		while (!print.isEmpty())
+		{
+			armyUnit* E;
+			print.dequeue(E);
+			cout << E << " ";
+		}
+		cout << "]" << endl;
 	}
-	cout << "]" << endl;
 	while (!temp_list_gunnery.isEmpty())
 	{
 		Gunnery* ES; int x;

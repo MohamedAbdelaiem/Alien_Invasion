@@ -456,6 +456,12 @@ EarthArmy* Game::get_humans_pointer()
     return humans;
 }
 
+void Game::generate_output_file()
+{
+    ofstream outfile;
+
+}
+
 
 Game::~Game()
 {
