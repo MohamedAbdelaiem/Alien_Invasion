@@ -6,14 +6,28 @@
 using namespace std;
 int main()
 {
-	
 	string fileName;
-	cout << "Enter the file name: ";
-	cin >> fileName;
-	cout << endl;
-	Game g1(fileName);
-	for(int i=0;i<50;i++)
-	g1.simulate();
+	bool ModeSilent;
+	char mode='h';
+	do {
+		cout << "Which mode you want?\n";
+		cout << "A) Silent\nB) Interactive\n";
+		cin >> mode;
+	} while (mode != 'A' && mode != 'a' && mode != 'b' && mode != 'B');
+	if (mode == 'B' || mode == 'b')
+	{
+		ModeSilent = false;
+	}
+	else
+	{
+		ModeSilent = true;
+	}
+		cout << "Enter the file name: ";
+		cin >> fileName;
+		cout << endl;
+		Game g1(fileName,ModeSilent);
+		for (int i = 0; i < 50; i++)
+			g1.simulate();
 	return 0;
 }
 

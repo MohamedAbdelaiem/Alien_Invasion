@@ -17,13 +17,16 @@ private:
 	Rand_Gen*random_generator;
 	int current_time;
 	int N, Prop;
+	bool silentMode;
 public:
-	Game(string fileName);
+	Game(string fileName ,bool silentMode);
 	void attack();	
 	void print_lists();
 	void generate();
 	void increament_time();
-	int  get_current_time();
+	int  get_current_time(); 
+	void setSilentMode(bool mode); 
+	bool  getSilentMode(); 
 	//void test();
 	void simulate();
 	bool loadFromInput(string fileName);

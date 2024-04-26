@@ -4,8 +4,9 @@ using namespace std;
 #include "time.h"
 #include <conio.h>
 #include<random>
-Game::Game(string fileName)//initializes the system
+Game::Game(string fileName,bool silentMode)//initializes the system
 {
+    this->silentMode = silentMode;
 	killed_list = new LinkedQueue<armyUnit*>;
 	aliens = new AlienArmy;
 	humans = new EarthArmy;
@@ -17,6 +18,7 @@ Game::Game(string fileName)//initializes the system
 
 void Game::attack()
 {
+    if(!this->silentMode)
     cout << "==================== Units fighting at current step ====================\n";
     humans->attack();
     aliens->attack();
@@ -64,6 +66,16 @@ void Game::increament_time()
 int Game::get_current_time()
 {
     return current_time;
+}
+
+void Game::setSilentMode(bool mode)
+{
+    this->silentMode = mode;
+}
+
+bool Game::getSilentMode()
+{
+    return this->silentMode;
 }
 
 //void Game::test()
@@ -319,14 +331,18 @@ int Game::get_current_time()
 void Game::simulate()
 {
     this->generate();
+    if(!silentMode)
     this->print_lists();
 
     this->attack();
-    cout << "==================== Killed / Distructed List ====================\n";
-    cout << killed_list->get_count() << " Units ";
-    killed_list->print_list();
+    if (!silentMode)
+    {
+        cout << "==================== Killed / Distructed List ====================\n";
+        cout << killed_list->get_count() << " Units ";
+        killed_list->print_list();
         cout << "***********\t\tpress enter to move to the next step\t\t******************\n\n\n";
         while (_getch() != 13) {};
+    }
     this->current_time++;
 }
 
