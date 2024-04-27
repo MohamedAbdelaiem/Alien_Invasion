@@ -68,8 +68,16 @@ void AlienArmy::print()
 
 void AlienArmy::attack()						
 {
+	armyUnit* AS = new AllienSoldier;
+	armyUnit* E = AS;
+	if (peek_unit(AS))
+	{
+		AS->Attack();
+	}
+	delete E;
 	armyUnit* m = new monsters;
-	armyUnit* E=m;
+	
+	E = m;
 	if (peek_unit(m))
 	{
 		m->Attack();
