@@ -4,11 +4,13 @@
 
 tank::tank(int id):armyUnit(id)
 {
+	start_to_attack_AS = false;
 	this->Type = Tank;
 }
 
 tank::tank(int id, int join_time, int Health, int power, int attackC, unitType type, Game* game):armyUnit(id, join_time, Health, power, attackC, type,game)
 {
+	start_to_attack_AS = false;
 }
 
 void tank::Attack()
@@ -26,7 +28,7 @@ void tank::Attack()
 	EarthArmyList = game_ptr->get_humans_pointer();
 
 	// Attacking Allien Soldiers if EarthSoldiers count falls below 30% of AllienSoldiers count
-	if (alienArmyList->getCountForAS() != 0 && (float(EarthArmyList->getCountForES()) / alienArmyList->getCountForAS()) < 0.3)
+	if ((alienArmyList->getCountForAS() != 0 && (float(EarthArmyList->getCountForES()) / alienArmyList->getCountForAS()) < 0.3) || ((this->start_to_attack_AS) && (float(EarthArmyList->getCountForES()) / alienArmyList->getCountForAS()) < 0.8))
 	{
 		armyUnit* AS = new AllienSoldier;   // allocate an AS to do dynamic_cast
 		armyUnit* A = AS;
@@ -54,23 +56,26 @@ void tank::Attack()
 			else break;
 		}
 		delete A;
+		if ((float(EarthArmyList->getCountForES()) / alienArmyList->getCountForAS()) >= 0.8) this->start_to_attack_AS = false;
+		else this->start_to_attack_AS = true;
 	}
 	 
 	//print the attacked AllienSoldiers
+	AllienSoldier* as;
 	if (!game_ptr->getSilentMode())
 	{
-		AllienSoldier* as;
 		cout << "ET " << this->ID << " shots [ ";        //--> print the attacked units
 		while (print_AS.dequeue(as))
 		{
 			cout << as->getID() << " ";
 		}
 		cout << "]";
-		while (templist_AS.dequeue(as))
-		{
-			alienArmyList->addUnit(as);        // moves all units from templist to its original list
-		}
 	}
+	while (templist_AS.dequeue(as))
+	{
+			alienArmyList->addUnit(as);        // moves all units from templist to its original list
+	}
+	
 
 	//Attacking the monsters
 	armyUnit* AM = new monsters;   // allocate an AM to do dynamic_cast
@@ -106,14 +111,4 @@ void tank::Attack()
 	{
 		alienArmyList->addUnit(am);        // moves all units from templist to its original list
 	}
-
-
-
-	
-
-
-
-
-
-
 }
