@@ -7,7 +7,7 @@ EarthArmy::EarthArmy()
 	Gunneries = new priQueue<Gunnery*>;
 	soldiers = new LinkedQueue<earthSoldier*>;
 	tanks = new ArrayStack<tank*>;
-	healing_list = new ArrayStack<Heal_Soldier*>;
+	HL = new ArrayStack<Heal_Soldier*>;
 }
 
 void EarthArmy::addUnit(armyUnit* unit)
@@ -22,7 +22,13 @@ void EarthArmy::addUnit(armyUnit* unit)
 	}
 	else if (Gunnery* g = (dynamic_cast<Gunnery*>(unit)))       //Add a Gunnary
 	{
-		Gunneries->enqueue(g,g->getHealth()+g->getPower());//add a gunnery to its list
+		Gunneries->enqueue(g,g->getHealth()+g->getPower());  //add a gunnery to its list
+	}
+	else
+	{
+		Heal_Soldier* HU = dynamic_cast<Heal_Soldier*>(unit);  // Add Heal unit to HL
+		if(HU)
+		HL->push(HU);
 	}
 	
 }
@@ -42,6 +48,13 @@ void EarthArmy::deleteUnit(armyUnit*& unit)
 
 		if(soldiers->dequeue(es))
 		unit = es;
+		else unit = nullptr;
+	}
+	else if (Heal_Soldier* HU = dynamic_cast<Heal_Soldier*>(unit))  // delete Heal unit
+	{
+
+		if (HL->pop(HU))
+			unit = HU;
 		else unit = nullptr;
 	}
 	else                            //delete a Tank
@@ -64,6 +77,9 @@ void EarthArmy::print()
 
 	cout << Gunneries->getCount() << " EG ";     //print Gunnery list
 	Gunneries->print_list();
+
+	cout << HL->get_count() << " HU ";     //print HL
+	HL->print_list();
 
 	
 }
@@ -91,6 +107,16 @@ void EarthArmy::attack()
 	EG->Attack();        //--> make it attack 
 	//============================================
 
+
+}
+
+void EarthArmy::Healing()
+{
+	Heal_Soldier* HU;
+	if (HL->pop(HU))
+	{
+		HU->Attack();
+	}
 
 }
 
@@ -124,6 +150,17 @@ bool EarthArmy::peek_unit(armyUnit*& unit)
 			return false;
 		}
 	}
+	else if (Heal_Soldier* HU = dynamic_cast<Heal_Soldier*>(unit)) 
+	{
+		if (HL->peek(HU))             // peek the freshest HU
+			unit = HU;
+		else
+		{
+			unit = nullptr;
+			return false;
+		}
+		
+	}
 	else
 	{
 		tank* T;
@@ -151,10 +188,10 @@ EarthArmy::~EarthArmy()  //Destructor
 	{
 		if (eg) delete eg;
 	}
-	Heal_Soldier* HS;
-	while (healing_list->pop(HS))
+	Heal_Soldier* HU;
+	while (HL->pop(HU))
 	{
-		if (HS) delete HS;
+		if (HU) delete HU;
 	}
 	tank* et;
 	while (tanks->pop(et))
@@ -167,6 +204,6 @@ EarthArmy::~EarthArmy()  //Destructor
 	tanks = nullptr;
 	delete Gunneries;
 	Gunneries = nullptr;
-	delete healing_list;
-	healing_list = nullptr;
+	delete HL;
+	HL = nullptr;
 }

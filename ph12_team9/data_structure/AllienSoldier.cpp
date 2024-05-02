@@ -35,7 +35,12 @@ void AllienSoldier::Attack()
 	while (temp.dequeue(es))
 	{
 		es->setHealth(es->getHealth() - this->getPower());
-		if (es->getHealth())
+		if (float(es->getHealth()) / es->getOrigHealth() < 0.2 && es->getHealth()>0)
+		{
+			game_ptr->add_to_UML(es, -es->getHealth());
+			es->set_time_UML(game_ptr->get_current_time());
+		}
+		else if (es->getHealth())
 		{
 			EarthA->addUnit(es);
 		}

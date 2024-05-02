@@ -18,6 +18,7 @@ armyUnit::armyUnit(int id, int join_time, int Health, int power, int attackC,uni
     this->set_unittype(type);
     this-> game_ptr = game;
     attacked_time = -1;
+    this->orig_health = Health;
 }
 void armyUnit::setID(int id)
 {
@@ -47,6 +48,11 @@ void armyUnit::setHealth(int health)
 int armyUnit::getHealth() const
 {
     return this->health;
+}
+
+int armyUnit::getOrigHealth() const
+{
+    return this->orig_health;
 }
 
 void armyUnit::setPower(float power)
@@ -127,6 +133,16 @@ int armyUnit::get_first_attack_delay() const
 int armyUnit::get_battle_time() const
 {
     return Db;
+}
+
+void armyUnit::set_time_UML(int time)
+{
+    this->time_joining_UML = time;
+}
+
+int armyUnit::get_time_UML()
+{
+    return this->time_joining_UML;
 }
 
 

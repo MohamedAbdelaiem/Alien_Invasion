@@ -75,13 +75,18 @@ void monsters::Attack()
 		ES->set_attacked_time(game_ptr->get_current_time());
 		ES->setHealth (ES->getHealth()-((Power * health) / 100) / (sqrt(ES->getHealth())));
 		ES->set_first_attack_delay();
-		if (ES->getHealth() == 0)
+		if (float(ES->getHealth()) / ES->getOrigHealth() < 0.2 && ES->getHealth() > 0)
 		{
-			game_ptr->add_to_killed_list(ES);
+			game_ptr->add_to_UML(ES, -1*ES->getHealth());
+			ES->set_time_UML(game_ptr->get_current_time());
+		}
+		else if (ES->getHealth() > 0)
+		{
+			game_ptr->get_humans_pointer()->addUnit(ES);
 		}
 		else
 		{
-			game_ptr->get_humans_pointer()->addUnit(ES);
+			game_ptr->add_to_killed_list(ES);
 		}
 	}
 	while (!temp_list_tank.isEmpty())
@@ -91,7 +96,12 @@ void monsters::Attack()
 		t->set_attacked_time(game_ptr->get_current_time());
 		t->setHealth(t->getHealth() - ((Power *health) / 100) / (sqrt(t->getHealth())));
 		t->set_first_attack_delay();
-		if (t->getHealth() == 0)
+		if ((float(t->getHealth()) / t->getOrigHealth() < 0.2) && (t->getHealth() > 0))
+		{
+			game_ptr->add_to_UML(t, -1000);
+			t->set_time_UML(game_ptr->get_current_time());
+		}
+		else if (t->getHealth() == 0)
 		{
 			game_ptr->add_to_killed_list(t);
 		}

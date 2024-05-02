@@ -17,6 +17,7 @@ private:
 	Rand_Gen*random_generator;
 	int current_time;
 	int N, Prop;
+	int numOfHealedUnits;
 	bool silentMode;
 public:
 	Game(string fileName ,bool silentMode);
@@ -26,11 +27,15 @@ public:
 	void increament_time();
 	int  get_current_time(); 
 	void setSilentMode(bool mode); 
+	void incr_numOfHealedUnits();
+	int get_numOfHealedUnits();
 	bool  getSilentMode(); 
 	//void test();
 	void simulate();
 	bool loadFromInput(string fileName);
 	void add_to_killed_list(armyUnit* unit);
+	void add_to_UML(armyUnit* unit, int priority);
+	priQueue<armyUnit*>* get_UML();
 	AlienArmy* get_aliens_pointer();
 	EarthArmy* get_humans_pointer();
 	void generate_output_file();

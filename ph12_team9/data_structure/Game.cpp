@@ -13,6 +13,7 @@ Game::Game(string fileName,bool silentMode)//initializes the system
 	random_generator = new Rand_Gen(this);
     UML = new priQueue<armyUnit*>;
 	current_time = 1;
+    numOfHealedUnits = 0;
     loadFromInput(fileName);
 }
 
@@ -71,6 +72,16 @@ int Game::get_current_time()
 void Game::setSilentMode(bool mode)
 {
     this->silentMode = mode;
+}
+
+void Game::incr_numOfHealedUnits()
+{
+    this->numOfHealedUnits++;
+}
+
+int Game::get_numOfHealedUnits()
+{
+    return this->numOfHealedUnits;
 }
 
 bool Game::getSilentMode()
@@ -337,6 +348,9 @@ void Game::simulate()
     this->attack();
     if (!silentMode)
     {
+        cout << "==================== UML ====================\n";
+        cout << UML->getCount()<< " Units ";
+        UML->print_list();
         cout << "==================== Killed / Distructed List ====================\n";
         cout << killed_list->get_count() << " Units ";
         killed_list->print_list();
@@ -446,6 +460,17 @@ void Game::add_to_killed_list(armyUnit* unit)
     killed_list->enqueue(unit);
 }
 
+void Game::add_to_UML(armyUnit* unit, int priority)
+{
+    if(unit)
+    UML->enqueue(unit, priority);
+}
+
+priQueue<armyUnit*>* Game::get_UML()
+{
+    return this->UML;
+}
+
 AlienArmy* Game::get_aliens_pointer()
 {
     return aliens;
@@ -469,6 +494,7 @@ Game::~Game()
     int i;
     while (killed_list->dequeue(aa)) if (aa) delete aa;
     while (UML->dequeue(aa,i))  if (aa)delete aa;
+
 	delete aliens, humans, random_generator,killed_list,UML;
 }
 

@@ -16,13 +16,14 @@ private:
 	priQueue<Gunnery*>* Gunneries;
 	LinkedQueue<earthSoldier*>* soldiers;
 	ArrayStack<tank*>* tanks;
-	ArrayStack<Heal_Soldier*>*healing_list;
+	ArrayStack<Heal_Soldier*>*HL;
 public:
 	EarthArmy();
 	virtual void addUnit(armyUnit* unit) ;
 	virtual void deleteUnit(armyUnit*& unit) ;
 	virtual void print() ;
 	virtual void attack() ;
+	virtual void Healing();
 	virtual int getCountForES() ;//get the number of Earth Soldiers
 	bool peek_unit(armyUnit*& unit);
 	~EarthArmy();

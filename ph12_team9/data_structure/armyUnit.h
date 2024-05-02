@@ -13,12 +13,14 @@ protected:
 	unitType Type;
 	int joinTime;
 	int health;
+	int orig_health;
 	float Power;
 	int attackCapacity;
 	int attacked_time;
 	int destroyed_time;
 	int DF, Dd, Db;//first attacked delay,destruction delay,battle time
 	Game* game_ptr;
+	int time_joining_UML;
 public:
 	armyUnit(int id);
 	armyUnit(int id, int join_time, int Health, int power, int attackC,unitType type,Game*game );
@@ -29,6 +31,7 @@ public:
 	virtual int getJoinTime()const;
 	virtual void setHealth(int);
 	virtual int getHealth()const;
+	virtual int getOrigHealth() const;
 	virtual void setPower(float);
 	virtual float getPower()const;
 	virtual void setAttackCapacity(int);
@@ -46,6 +49,8 @@ public:
 	virtual int get_first_attack_delay() const;
 	virtual int get_battle_time() const;
 	virtual void Attack()=0;
+	void set_time_UML(int time);
+	int get_time_UML();
 	friend ostream& operator<<(ostream& os,armyUnit* ptr);
 };
 #endif

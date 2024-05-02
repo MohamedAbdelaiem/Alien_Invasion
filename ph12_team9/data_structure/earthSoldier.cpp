@@ -61,3 +61,5 @@ void earthSoldier::Attack()
 	
 
 }
+
+

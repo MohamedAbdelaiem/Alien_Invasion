@@ -4,6 +4,7 @@
 #include "armyUnit.h"
 class Army
 {
+	
 public:
 	virtual void addUnit(armyUnit* unit)=0;//add a general unit to its list
 	virtual void deleteUnit(armyUnit*& unit) =0;//remove a general unit from its list
