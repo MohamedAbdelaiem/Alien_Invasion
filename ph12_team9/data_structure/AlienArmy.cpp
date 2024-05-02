@@ -7,6 +7,7 @@ AlienArmy::AlienArmy()
 	array_monsters = new Array<monsters*>;
 	queue_drones = new QUEUE<Drones*>;
 	allien_soldier = new LinkedQueue<AllienSoldier*>;
+	flag_delete_drone = true;
 	
 }
 
@@ -112,7 +113,30 @@ bool AlienArmy::delete_two_drones(armyUnit*& drone1, armyUnit*& drone2)
 	}
 	else
 	{
+	
 		drone1 = drone2 = nullptr;
+		return false;
+	}
+}
+
+bool AlienArmy::delete_first_or_last_drone(Drones*& drone1)
+{
+	if (flag_delete_drone)
+	{
+		if (queue_drones->dequeue(drone1))
+		{
+			flag_delete_drone = false;
+			return true;
+		}
+		return false;
+	}
+	else
+	{
+		if (queue_drones->dequeue_last(drone1))
+		{
+			flag_delete_drone = true;
+			return true;
+		}
 		return false;
 	}
 }

@@ -18,6 +18,7 @@ private:
 	QUEUE<Drones*>* queue_drones;
 	//queue to alien soldiers
 	LinkedQueue<AllienSoldier*>* allien_soldier;
+	bool flag_delete_drone; 
 public:
 	AlienArmy();
 	virtual void addUnit(armyUnit* unit);//add a general unit to its list
@@ -26,6 +27,7 @@ public:
 	virtual void attack();//attack earth army
 	virtual int getCountForAS();//Get the number of Alien Soldiers
 	bool delete_two_drones(armyUnit*& drone1, armyUnit*& drone2);//delete two units(drones)
+	bool delete_first_or_last_drone(Drones*& drone1);//delete drone once from front and once from back
 	bool peek_two_drones(armyUnit*& drone1, armyUnit*& drone2);//peek two units(drones)
 	bool peek_unit(armyUnit*& unit);//peek a general  unit
 	~AlienArmy();
