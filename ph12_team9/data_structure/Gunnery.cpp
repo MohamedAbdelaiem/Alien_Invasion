@@ -29,8 +29,9 @@ void Gunnery::Attack()
 		{
 			if (!game_ptr->getSilentMode())
 				cout << AM << " ";
+			AM->set_attacked_time(game_ptr->get_current_time());
 			AM->set_first_attack_delay();
-			AM->setHealth(AM->getHealth() - this->getPower());
+			AM->setHealth(AM->getHealth() - (this->Power * this->health / 100) / sqrt(AM->getHealth()));
 			if (AM->getHealth())
 			{
 				temp.enqueue(AM);
@@ -47,8 +48,9 @@ void Gunnery::Attack()
 	{
 		if (!game_ptr->getSilentMode())
 			cout << AD << " ";
+		AD->set_attacked_time(game_ptr->get_current_time());
 		AD->set_first_attack_delay();
-		AD->setHealth(AD->getHealth() - this->getPower());
+		AD->setHealth(AD->getHealth() - (this->Power * this->health / 100) / sqrt(AD->getHealth()));
 		if (AD->getHealth())
 		{
 			temp.enqueue(AD);

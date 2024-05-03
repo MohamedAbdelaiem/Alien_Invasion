@@ -24,10 +24,11 @@ void AllienSoldier::Attack()
 		EarthA->deleteUnit(ES);
 		if (ES)
 		{
+			if (!game_ptr->getSilentMode())
 			cout << ES << " ";
 			ES->set_attacked_time(game_ptr->get_current_time());   //set the first attacked time 
 			ES->set_first_attack_delay();
-			ES->setHealth(ES->getHealth() - this->getPower());
+			ES->setHealth(ES->getHealth() - (this->Power * this->health / 100) / sqrt(ES->getHealth()));
 			if (float(ES->getHealth()) / ES->getOrigHealth() < 0.2 && ES->getHealth() > 0)
 			{
 				game_ptr->add_to_UML(ES, -ES->getHealth());
@@ -44,6 +45,7 @@ void AllienSoldier::Attack()
 		}
 		i++;
 	}
+	if (!game_ptr->getSilentMode())
 	cout << "]\n";
 	armyUnit* tempPtr;
 	while (temp.dequeue(tempPtr))

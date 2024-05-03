@@ -16,6 +16,7 @@ Game::Game(string fileName,bool silentMode,string outfile)//initializes the syst
     numOfHealedUnits = 0;
     loadFromInput(fileName);
     generate_output_file(outfile);
+    killed_ES = 0, killed_ET = 0, killed_EG = 0, killed_AS = 0, killed_AD = 0, killed_AM = 0, killed_HU = 0, E_Df_total = 0, E_Dd_total = 0, E_Db_total = 0, A_Df_total = 0, A_Dd_total = 0, A_Db_total = 0;
 }
 
 void Game::attack()
@@ -110,6 +111,40 @@ void Game::simulate()
         while (_getch() != 13) {};
     }
     this->current_time++;
+    if (check_winner())
+    {
+        outfile << "//////////////////////////////////////////////////Earth Army////////////////////////////////////////////////////" << endl;
+        outfile << "Total Earth soldier: " << humans->ES_get_count() << endl;
+        outfile << "Total Earth tank: " << humans->ET_get_count() << endl;
+        outfile << "Total Earth gunnery: " << humans->EG_get_count() << endl;
+        outfile << "Total Earth HealUnits: " << humans->HU_get_count() << endl;
+        outfile << "Total Earth Healed Units: " << get_numOfHealedUnits() << endl;
+        outfile << "percentage destructed Earth soldier: " << ((float)killed_ES / (humans->ES_get_count())) * 100 << "%" << endl;
+        outfile << "percentage destructed Earth tank: " << ((float)killed_ET / humans->ET_get_count()) * 100 << "%" << endl;
+        outfile << "percentage destructed Earth gunnery: " << ((float)killed_EG / humans->EG_get_count()) * 100 << "%" << endl;
+        //   outfile << "percentage destructed Earth HealUnits: " << (killed_HU / humans->HU_get_count()) * 100 << "%" << endl;
+        outfile << "percentage healed Earth Units: " << (float)get_numOfHealedUnits() / (humans->ES_get_count() + humans->ET_get_count() + humans->EG_get_count()) * 100 << "%" << endl;
+        outfile << "percentage destructed Earth Army :" << (((float)killed_ES + killed_ET + killed_EG + killed_HU) / (humans->ES_get_count() + humans->ET_get_count() + humans->EG_get_count() + humans->HU_get_count())) * 100 << "%" << endl;
+        outfile << "Average of Df = " << (float)E_Df_total / (humans->ES_get_count() + humans->ET_get_count() + humans->EG_get_count() + humans->HU_get_count()) * 100 << "%\n";
+       // outfile << "Average of Dd = " << E_Dd_total / (killed_ES + killed_ET + killed_EG + killed_HU) * 100 << "%\n";
+       // outfile << "Average of Db = " << E_Db_total / (killed_ES + killed_ET + killed_EG + killed_HU) * 100 << "%\n";
+        outfile << "Df/Db = " << (float)E_Df_total / E_Db_total * 100 << "%\n";
+        outfile << "Dd/Db = " << (float)E_Dd_total / E_Db_total * 100 << "%\n";
+        outfile << "//////////////////////////////////////////////////Alien Army////////////////////////////////////////////////////" << endl;
+        outfile << "Total Alien soldiers: " << aliens->get_count_AS() << endl;
+        outfile << "Total Alien monsters: " << aliens->get_count_AM() << endl;
+        outfile << "Total Alien drones: " << aliens->get_count_AD() << endl;
+        outfile << "percentage destructed Alien soldiers: " << ((float)killed_AS / aliens->get_count_AS()) * 100 << "%" << endl;
+        outfile << "percentage destructed Alien monsters: " << ((float)killed_AM / aliens->get_count_AM()) * 100 << "%" << endl;
+        outfile << "percentage destructed Alien drones: " << ((float)killed_AD / aliens->get_count_AD()) * 100 << "%" << endl;
+        outfile << "percentage destructed Alien Army :" << ((float)(killed_AS + killed_AM + killed_AD) / (aliens->get_count_AS() + aliens->get_count_AM() + aliens->get_count_AD())) * 100 << "%" << endl;
+        outfile << "Average of Df = " << (float)A_Df_total / (killed_AS + killed_AM + killed_AD)  << "\n";
+        outfile << "Average of Dd = " << (float)A_Dd_total / (killed_AS + killed_AM + killed_AD)  << "\n";
+        outfile << "Average of Db = " << (float)A_Db_total / (killed_AS + killed_AM + killed_AD)  << "\n";
+        outfile << "Df/Db = " << (float)A_Df_total / A_Db_total * 100 << "%\n";
+        outfile << "Dd/Db = " << (float)A_Dd_total / A_Db_total * 100 << "%\n";
+
+    }
 }
 
 bool Game::loadFromInput(string fileName)
@@ -213,13 +248,48 @@ void Game::add_to_killed_list(armyUnit* unit)
     add_to_file(unit);
     switch (unit->getUnitType())
     {
-    earth_soldier:killed_ES++;
-    Tank:killed_ET++;
-    gunnery:killed_EG++;
-    Heal_soldier:killed_HU++;
-    alien_soldier:killed_AS++;
-    monster:killed_AM++;
-    drone:killed_AD++;
+    case (earth_soldier):
+        killed_ES++;
+        E_Dd_total += unit->get_destruction_delay();
+        E_Db_total += unit->get_battle_time();
+        E_Df_total += unit->get_first_attack_delay();
+        break;
+    case(Tank):
+        killed_ET++;
+        E_Dd_total += unit->get_destruction_delay();
+        E_Db_total += unit->get_battle_time();
+        E_Df_total += unit->get_first_attack_delay();
+        break;
+    case(gunnery):
+        killed_EG++;
+        E_Dd_total += unit->get_destruction_delay();
+        E_Db_total += unit->get_battle_time();
+        E_Df_total += unit->get_first_attack_delay();
+        break;
+    case(Heal_soldier):
+        killed_HU++;
+        E_Dd_total += unit->get_destruction_delay();
+        E_Db_total += unit->get_battle_time();
+        E_Df_total += unit->get_first_attack_delay();
+        break;
+    case(alien_soldier):
+        killed_AS++;
+        A_Dd_total += unit->get_destruction_delay();
+        A_Db_total += unit->get_battle_time();
+        A_Df_total += unit->get_first_attack_delay();
+        break;
+    case(monster):
+        killed_AM++;
+        A_Dd_total += unit->get_destruction_delay();
+        A_Db_total += unit->get_battle_time();
+        A_Df_total += unit->get_first_attack_delay();
+        break;
+    case(drone):
+        killed_AD++;
+        A_Dd_total += unit->get_destruction_delay();
+        A_Db_total += unit->get_battle_time();
+        A_Df_total += unit->get_first_attack_delay();
+        break;
     default:
         break;
     }
@@ -256,20 +326,7 @@ void Game::generate_output_file(string filename)
 void Game::add_to_file(armyUnit* unit)
 {
     outfile << unit->get_destroyed_time() << "\t" << unit->getID() << "\t" << unit->getJoinTime() << "\t" << unit->get_first_attack_delay() << "\t" << unit->get_destruction_delay() << "\t" << unit->get_battle_time() << endl;
-    if (check_winner())
-    {
-        outfile<< "//////////////////////////////////////////////////Earth Army////////////////////////////////////////////////////" << endl;
-        outfile << "Total Earth soldier: " << humans->ES_get_count() << endl;
-        outfile << "Total Earth tank: " << humans->ET_get_count() << endl;
-        outfile << "Total Earth gunnery: " << humans->EG_get_count() << endl;
-        outfile << "Total Earth HealUnits: " << humans->HU_get_count() << endl;
-        outfile << "percentage destructed Earth soldier: " << (killed_ES/ (humans->ES_get_count()))*100<<"%" << endl;
-        outfile << "percentage destructed Earth tank: " << (killed_ET / humans->ET_get_count())*100 <<"%" << endl;
-        outfile << "percentage destructed Earth gunnery: " << (killed_EG / humans->EG_get_count()) * 100 << "%" << endl;
-        outfile << "percentage destructed Earth HealUnits: " << (killed_HU / humans->HU_get_count()) * 100 << "%" << endl;
-        outfile << "percentage destructed Earth Army :" << ((killed_ES + killed_ET + killed_EG + killed_HU) / (humans->ES_get_count() + humans->ET_get_count() + humans->EG_get_count() + humans->HU_get_count())) * 100 << "%" << endl;
-
-    }
+    
 }
 
 bool Game::check_winner()
@@ -290,7 +347,7 @@ bool Game::check_winner()
         {
             cout << " The fight ended with Draw" << endl;
         }
-        else
+        else 
         {
             return false;
         }

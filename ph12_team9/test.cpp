@@ -46,8 +46,9 @@ int main()
 	cout << "Enter the output file name: ";
 	cin >> fileName_out;
 	Game g1(fileName,ModeSilent, fileName_out);
-	for (int i = 0; i < 50; i++)
+	do {
 		g1.simulate();
+	} while (!g1.check_winner());
 	return 0;
 }
 

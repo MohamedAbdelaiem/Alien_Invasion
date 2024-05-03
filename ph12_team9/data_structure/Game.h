@@ -17,7 +17,7 @@ private:
 	Rand_Gen*random_generator;
 	ofstream outfile;
 	int current_time;
-	int N, Prop,killed_ES, killed_ET, killed_EG, killed_AS, killed_AD, killed_AM, killed_HU;
+	int N, Prop,killed_ES, killed_ET, killed_EG, killed_AS, killed_AD, killed_AM, killed_HU,E_Df_total, E_Dd_total, E_Db_total,  A_Df_total, A_Dd_total, A_Db_total;
 	int numOfHealedUnits;
 	bool silentMode;
 public:
