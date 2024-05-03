@@ -8,21 +8,26 @@ AlienArmy::AlienArmy()
 	queue_drones = new QUEUE<Drones*>;
 	allien_soldier = new LinkedQueue<AllienSoldier*>;
 	flag_delete_drone = true;
-	
+	 AD_total=0;
+	 AM_total=0;
+	 AS_total=0;
 }
 
 void AlienArmy::addUnit(armyUnit* unit)
 {
 	if(monsters*m=(dynamic_cast<monsters*>(unit)))
 	{
+		AM_total++;
 		array_monsters->insert(m);//add a monster to its list
 	}
 	else if (Drones* d = dynamic_cast<Drones*>(unit))
 	{
+		AD_total++;
 		queue_drones->enqueue_first_last(d);//add a drone to its list
 	}
 	else
 	{
+		AS_total++;
 		allien_soldier->enqueue(dynamic_cast<AllienSoldier*>(unit));//add a soldier to its list
 	}
 }
@@ -197,6 +202,26 @@ bool AlienArmy::peek_unit(armyUnit*& unit)
 		}
 	}
 	return true;
+}
+
+int AlienArmy::get_count()
+{
+	return allien_soldier->get_count()+ queue_drones->get_count()+array_monsters->get_count();
+}
+
+int AlienArmy::get_count_AD()
+{
+	return AD_total;
+}
+
+int AlienArmy::get_count_AM()
+{
+	return AM_total;
+}
+
+int AlienArmy::get_count_AS()
+{
+	return AS_total;
 }
 
 AlienArmy::~AlienArmy()

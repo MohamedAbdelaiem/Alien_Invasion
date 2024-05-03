@@ -15,12 +15,13 @@ private:
 	AlienArmy* aliens;
 	EarthArmy* humans;
 	Rand_Gen*random_generator;
+	ofstream outfile;
 	int current_time;
-	int N, Prop;
+	int N, Prop,killed_ES, killed_ET, killed_EG, killed_AS, killed_AD, killed_AM, killed_HU;
 	int numOfHealedUnits;
 	bool silentMode;
 public:
-	Game(string fileName ,bool silentMode);
+	Game(string fileName ,bool silentMode,string out_file);
 	void attack();	
 	void print_lists();
 	void generate();
@@ -30,7 +31,6 @@ public:
 	void incr_numOfHealedUnits();
 	int get_numOfHealedUnits();
 	bool  getSilentMode(); 
-	//void test();
 	void simulate();
 	bool loadFromInput(string fileName);
 	void add_to_killed_list(armyUnit* unit);
@@ -38,7 +38,9 @@ public:
 	priQueue<armyUnit*>* get_UML();
 	AlienArmy* get_aliens_pointer();
 	EarthArmy* get_humans_pointer();
-	void generate_output_file();
+	void generate_output_file(string filename);
+	void add_to_file(armyUnit* unit);
+	bool check_winner();
 	~Game();
 
 

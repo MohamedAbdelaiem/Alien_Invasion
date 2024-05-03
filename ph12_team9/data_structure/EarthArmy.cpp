@@ -8,24 +8,32 @@ EarthArmy::EarthArmy()
 	soldiers = new LinkedQueue<earthSoldier*>;
 	tanks = new ArrayStack<tank*>;
 	HL = new ArrayStack<Heal_Soldier*>;
+	EG_total = 0;
+	ES_total = 0;
+	ET_total = 0;
+	HU_total = 0;
 }
 
 void EarthArmy::addUnit(armyUnit* unit)
 {
 	if (earthSoldier* S = (dynamic_cast<earthSoldier*>(unit)))  //Add an Earth Soldier 
 	{
+		ES_total++;
 		soldiers->enqueue(S);                                      
 	}
 	else if (tank* T = (dynamic_cast<tank*>(unit)))          //Add a Tank
 	{
+		ET_total++;
 		tanks->push(T);
 	}
 	else if (Gunnery* g = (dynamic_cast<Gunnery*>(unit)))       //Add a Gunnary
 	{
+		EG_total++;
 		Gunneries->enqueue(g,g->getHealth()+g->getPower());  //add a gunnery to its list
 	}
 	else
 	{
+		HU_total++;
 		Heal_Soldier* HU = dynamic_cast<Heal_Soldier*>(unit);  // Add Heal unit to HL
 		if(HU)
 		HL->push(HU);
@@ -89,7 +97,7 @@ void EarthArmy::attack()
 	//Attacking for EarthSoldier
 	earthSoldier* ES;
 	if(soldiers->peek(ES))   //--> peek one EarthSoldier from ES list 
-	ES->Attack();        //--> make it attack 
+		ES->Attack();        //--> make it attack 
 	//============================================
 	 
 	
@@ -106,12 +114,6 @@ void EarthArmy::attack()
 	if(Gunneries->peek(EG,x))   //--> peek one Gunnery from EG list 
 	EG->Attack();        //--> make it attack 
 	//============================================
-
-
-}
-
-void EarthArmy::Healing()
-{
 	Heal_Soldier* HU;
 	if (HL->pop(HU))
 	{
@@ -119,6 +121,8 @@ void EarthArmy::Healing()
 	}
 
 }
+
+
 
 int EarthArmy::getCountForES()
 {
@@ -172,6 +176,31 @@ bool EarthArmy::peek_unit(armyUnit*& unit)
 			return false;
 		}
 	}
+}
+
+int EarthArmy::get_count()
+{
+	return  tanks->get_count() + soldiers->get_count()+ Gunneries->getCount();
+}
+
+int EarthArmy::ES_get_count()
+{
+	return ES_total;
+}
+
+int EarthArmy::ET_get_count()
+{
+	return ET_total;
+}
+
+int EarthArmy::EG_get_count()
+{
+	return EG_total;
+}
+
+int EarthArmy::HU_get_count()
+{
+	return HU_total;
 }
 
 EarthArmy::~EarthArmy()  //Destructor

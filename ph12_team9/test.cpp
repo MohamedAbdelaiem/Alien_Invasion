@@ -8,9 +8,9 @@ int main()
 {
 	ifstream file;
 	string fileName;
+	string fileName_out;
 	bool ModeSilent;
 	char mode='h';
-	int number;
 	do
 	{
 		cout << "Which mode you want?\n";
@@ -25,15 +25,11 @@ int main()
 	{
 		ModeSilent = true;
 	}
-	do
-	{
-		cout << "Enter the nummber of rounds greater than or equal 40"<<endl;
-		cin >> number;
-	} while (number < 40);
+
 	//generate is true
 	while (true)
 	{
-		cout << "Enter the file name: ";
+		cout << "Enter the file name to generate units: ";
 		cin >> fileName;
 		cout << endl;
 		file.open(fileName+".txt");
@@ -47,7 +43,9 @@ int main()
 		}
 	}
 	file.close();
-	Game g1(fileName,ModeSilent);
+	cout << "Enter the output file name: ";
+	cin >> fileName_out;
+	Game g1(fileName,ModeSilent, fileName_out);
 	for (int i = 0; i < 50; i++)
 		g1.simulate();
 	return 0;

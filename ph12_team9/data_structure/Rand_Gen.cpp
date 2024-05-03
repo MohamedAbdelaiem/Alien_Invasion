@@ -35,6 +35,10 @@ void Rand_Gen::setAM(int x)
 {
     AM = x;
 }
+void Rand_Gen::setHU(int x)
+{
+    HU = x;
+}
 void Rand_Gen::setProp(int x)
 {
     Prop = x;
@@ -102,12 +106,17 @@ armyUnit* Rand_Gen::generate_earth_unit(int join_time)//generate earth unit
         return new_ET;
 
     }
-    else 
+    else  if(b<=ES+ET+EG)
     {
         //generate gunnery
         Gunnery* new_gunnery = new Gunnery(id_earth++, join_time, random_health, random_power, random_attack_capacity,gunnery, game_ptr);
        
         return new_gunnery;
+    }
+    else
+    {
+        Heal_Soldier* new_heal = new Heal_Soldier(id_earth++, join_time, random_health, random_power, random_attack_capacity, Heal_soldier, game_ptr);
+        return new_heal;
     }
    
     //random the data of this unit according of its range

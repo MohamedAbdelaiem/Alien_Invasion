@@ -7,7 +7,7 @@ class Rand_Gen
 {
 private:
 	int id_earth,id_alien;
-	int N, ES, ET, EG, AS, AD, AM,Prop;
+	int N, ES, ET, EG, AS, AD, AM,HU,Prop;
 	int E_Cap0, E_Cap1, E_Pow0, E_Pow1, E_Health0, E_Health1;
 	int A_Cap0, A_Cap1, A_Pow0, A_Pow1, A_Health0, A_Health1;
 	Game* game_ptr;
@@ -21,6 +21,7 @@ public:
 	void setAS(int x);
 	void setAD(int x);
 	void setAM(int x);
+	void setHU(int x);
 	void setProp(int x);
 	void E_Cap(int x0,int x1);
 	void E_Pow(int x0,int x1);

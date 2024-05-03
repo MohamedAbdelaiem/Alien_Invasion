@@ -3,7 +3,7 @@
 #define AR_UNIT
 #include<iostream>
 using namespace std;
-enum unitType { earth_soldier, Tank, gunnery, alien_soldier, monster,  drone,HU };
+enum unitType { earth_soldier, Tank, gunnery, alien_soldier, monster,  drone,Heal_soldier };
 class Game;
 class armyUnit
 {
