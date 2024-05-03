@@ -31,7 +31,7 @@ void earthSoldier::Attack()
 
 			print.enqueue(dynamic_cast <AllienSoldier*> (AS));     //add this AS to the print list
 
-			double damage = (this->Power * this->health / 100) / abs(AS->getHealth());   //calc the damage
+			double damage = (this->Power * this->health / 100) / sqrt(AS->getHealth());   //calc the damage
 			AS->setHealth(AS->getHealth() - damage);                                     //set the health after the demage
 			if (AS->getHealth() > 0)
 			{

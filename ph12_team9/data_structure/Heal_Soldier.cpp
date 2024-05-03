@@ -14,6 +14,7 @@ void Heal_Soldier::Attack()
 	priQueue<armyUnit*>* uml = game_ptr->get_UML();
 	LinkedQueue<armyUnit*>* tempList = new LinkedQueue<armyUnit*>;
 	EarthArmy* EarthPtr = game_ptr->get_humans_pointer();
+	bool isEmpty = uml->isEmpty();
 	armyUnit* unit;
 	for (int i = 0; i < this->attackCapacity; i++)
 	{
@@ -29,7 +30,7 @@ void Heal_Soldier::Attack()
 			else
 			{
 
-				unit->setHealth(unit->getHealth() + ((this->Power * this->health / 100) / abs(unit->getHealth())));
+				unit->setHealth(unit->getHealth() + ((this->Power * this->health / 100) / sqrt(unit->getHealth())));
 				if (float(unit->getHealth()) / unit->getOrigHealth() > 0.2)
 				{
 					EarthPtr->addUnit(unit);
@@ -56,7 +57,11 @@ void Heal_Soldier::Attack()
 		}
 		else uml->enqueue(unit, -1000);
 	}
-	this->setHealth(0);
-	game_ptr->add_to_killed_list(this);
+	if (!isEmpty)
+	{
+		this->setHealth(0);
+		game_ptr->add_to_killed_list(this);
+	}
+	else EarthPtr->addUnit(this);
 	delete tempList;
 }
