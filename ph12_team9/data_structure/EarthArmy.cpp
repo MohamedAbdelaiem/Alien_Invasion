@@ -30,8 +30,10 @@ void EarthArmy::addUnit(armyUnit* unit)
 	else
 	{
 		Heal_Soldier* HU = dynamic_cast<Heal_Soldier*>(unit);  // Add Heal unit to HL
-		if(HU)
-		HL->push(HU);
+		if (HU)
+		{
+			HL->push(HU);
+		}
 	}
 	
 }
