@@ -114,36 +114,72 @@ void Game::simulate()
     if (check_winner())
     {
         outfile << "//////////////////////////////////////////////////Earth Army////////////////////////////////////////////////////" << endl;
-        outfile << "Total Earth soldier: " << humans->ES_get_count() << endl;
-        outfile << "Total Earth tank: " << humans->ET_get_count() << endl;
-        outfile << "Total Earth gunnery: " << humans->EG_get_count() << endl;
-        outfile << "Total Earth HealUnits: " << humans->HU_get_count() << endl;
+        outfile << "Total Earth soldier: " << random_generator->getES_total() << endl;
+        outfile << "Total Earth tank: " << random_generator->getET_total() << endl; 
+        outfile << "Total Earth gunnery: " << random_generator->getEG_total() << endl;
+        outfile << "Total Earth HealUnits: " << random_generator->getHU_total() << endl;
         outfile << "Total Earth Healed Units: " << get_numOfHealedUnits() << endl;
-        outfile << "percentage destructed Earth soldier: " << ((float)killed_ES / (humans->ES_get_count())) * 100 << "%" << endl;
-        outfile << "percentage destructed Earth tank: " << ((float)killed_ET / humans->ET_get_count()) * 100 << "%" << endl;
-        outfile << "percentage destructed Earth gunnery: " << ((float)killed_EG / humans->EG_get_count()) * 100 << "%" << endl;
-        //   outfile << "percentage destructed Earth HealUnits: " << (killed_HU / humans->HU_get_count()) * 100 << "%" << endl;
-        outfile << "percentage healed Earth Units: " << (float)get_numOfHealedUnits() / (humans->ES_get_count() + humans->ET_get_count() + humans->EG_get_count()) * 100 << "%" << endl;
-        outfile << "percentage destructed Earth Army :" << (((float)killed_ES + killed_ET + killed_EG + killed_HU) / (humans->ES_get_count() + humans->ET_get_count() + humans->EG_get_count() + humans->HU_get_count())) * 100 << "%" << endl;
-        outfile << "Average of Df = " << (float)E_Df_total / (humans->ES_get_count() + humans->ET_get_count() + humans->EG_get_count() + humans->HU_get_count()) * 100 << "%\n";
-       // outfile << "Average of Dd = " << E_Dd_total / (killed_ES + killed_ET + killed_EG + killed_HU) * 100 << "%\n";
-       // outfile << "Average of Db = " << E_Db_total / (killed_ES + killed_ET + killed_EG + killed_HU) * 100 << "%\n";
-        outfile << "Df/Db = " << (float)E_Df_total / E_Db_total * 100 << "%\n";
-        outfile << "Dd/Db = " << (float)E_Dd_total / E_Db_total * 100 << "%\n";
+        if (random_generator->getES_total() != 0)
+            outfile << "percentage destructed Earth soldier: " << ((float)killed_ES / (random_generator->getES_total())) * 100 << "%" << endl;
+        else
+            outfile << "there is no Earth soldiers generated" << endl;
+        if (random_generator->getET_total() != 0)
+        outfile << "percentage destructed Earth tank: " << ((float)killed_ET / random_generator->getET_total()) * 100 << "%" << endl;
+        else
+            outfile << "percentage destructed Earth tank: there is no Earth soldiers generated" << endl;
+        if (random_generator->getEG_total() != 0)
+        outfile << "percentage destructed Earth gunnery: " << ((float)killed_EG / random_generator->getEG_total()) * 100 << "%" << endl;
+        else
+            outfile << "percentage destructed Earth gunnery: there is no Earth gunnery generated" << endl;
+        if (random_generator->getHU_total() != 0)
+        outfile << "percentage destructed Earth HealUnits: " << (killed_HU / random_generator->getHU_total()) * 100 << "%" << endl;
+        else
+            outfile << "percentage destructed Earth HealUnits::there is no Earth HealUnits generated" << endl;
+        if (random_generator->getES_total()+ random_generator->getEG_total()+ random_generator->getHU_total()+ random_generator->getET_total() != 0)
+        outfile << "percentage healed Earth Units: " << (float)get_numOfHealedUnits() / (random_generator->getES_total() + random_generator->getET_total() + random_generator->getEG_total()) * 100 << "%" << endl;
+        else
+            outfile << "percentage healed Earth Units: there is no healed Earth Units " << endl;
+        if (random_generator->getES_total() + random_generator->getEG_total() + random_generator->getHU_total() + random_generator->getET_total() != 0)
+        outfile << "percentage destructed Earth Army :" << (((float)killed_ES + killed_ET + killed_EG + killed_HU) / (random_generator->getES_total() + random_generator->getET_total() + random_generator->getEG_total() + random_generator->getHU_total())) * 100 << "%" << endl;
+        else
+            outfile << "percentage destructed Earth Army :" << "there is no Earth unit  generated" << endl;
+        if (random_generator->getES_total() + random_generator->getEG_total() + random_generator->getHU_total() + random_generator->getET_total() != 0)
+        outfile << "Average of Df = " << (float)E_Df_total / (random_generator->getES_total() + random_generator->getET_total() + random_generator->getEG_total() + random_generator->getHU_total())  << "\n";
+        else
+            outfile << "Average of Df = " << "there is no Earth unit  generated" << endl;
+        if (killed_ES + killed_ET + killed_EG + killed_HU != 0)
+        outfile << "Average of Dd = " << E_Dd_total / (killed_ES + killed_ET + killed_EG + killed_HU)  << "\n";
+        else
+            outfile << "Average of Dd = " << "there is no Earth unit have been destructed" << endl;
+        if (killed_ES + killed_ET + killed_EG + killed_HU != 0)
+            outfile << "Average of Db = " << E_Db_total / (killed_ES + killed_ET + killed_EG + killed_HU)  << "\n";
+        else
+            outfile << "Average of Db = " << "there is no Earth unit have been destructed" << endl;
+        if (E_Db_total != 0)
+            outfile << "Df/Db = " << (float)E_Df_total / E_Db_total * 100 << "%\n";
+        else
+            outfile << "Df/Db = " << "there is no Earth unit have been destructed" << endl;
+        if (E_Db_total != 0)
+             outfile << "Dd/Db = " << (float)E_Dd_total / E_Db_total * 100 << "%\n";
+        else
+            outfile << "Dd/Db = " << "there is no Earth unit have been destructed" << endl;
         outfile << "//////////////////////////////////////////////////Alien Army////////////////////////////////////////////////////" << endl;
-        outfile << "Total Alien soldiers: " << aliens->get_count_AS() << endl;
-        outfile << "Total Alien monsters: " << aliens->get_count_AM() << endl;
-        outfile << "Total Alien drones: " << aliens->get_count_AD() << endl;
-        outfile << "percentage destructed Alien soldiers: " << ((float)killed_AS / aliens->get_count_AS()) * 100 << "%" << endl;
-        outfile << "percentage destructed Alien monsters: " << ((float)killed_AM / aliens->get_count_AM()) * 100 << "%" << endl;
-        outfile << "percentage destructed Alien drones: " << ((float)killed_AD / aliens->get_count_AD()) * 100 << "%" << endl;
-        outfile << "percentage destructed Alien Army :" << ((float)(killed_AS + killed_AM + killed_AD) / (aliens->get_count_AS() + aliens->get_count_AM() + aliens->get_count_AD())) * 100 << "%" << endl;
+        outfile << "Total Alien soldiers: " << random_generator->getAS_total() << endl;
+        outfile << "Total Alien monsters: " << random_generator->getAM_total() << endl;
+        outfile << "Total Alien drones: " << random_generator->getAD_total() << endl;
+        outfile << "percentage destructed Alien soldiers: " << ((float)killed_AS / random_generator->getAS_total()) * 100 << "%" << endl;
+        outfile << "percentage destructed Alien monsters: " << ((float)killed_AM / random_generator->getAM_total()) * 100 << "%" << endl;
+        outfile << "percentage destructed Alien drones: " << ((float)killed_AD / random_generator->getAD_total()) * 100 << "%" << endl;
+        outfile << "percentage destructed Alien Army :" << ((float)(killed_AS + killed_AM + killed_AD) / (random_generator->getAS_total() + random_generator->getAM_total() + random_generator->getAD_total())) * 100 << "%" << endl;
         outfile << "Average of Df = " << (float)A_Df_total / (killed_AS + killed_AM + killed_AD)  << "\n";
         outfile << "Average of Dd = " << (float)A_Dd_total / (killed_AS + killed_AM + killed_AD)  << "\n";
         outfile << "Average of Db = " << (float)A_Db_total / (killed_AS + killed_AM + killed_AD)  << "\n";
         outfile << "Df/Db = " << (float)A_Df_total / A_Db_total * 100 << "%\n";
         outfile << "Dd/Db = " << (float)A_Dd_total / A_Db_total * 100 << "%\n";
-
+        if (silentMode)
+        {
+            cout << "the output file has been generated" << endl;
+        }
     }
 }
 
@@ -335,17 +371,20 @@ bool Game::check_winner()
     {
         if (aliens->get_count() == 0 && humans->get_count() != 0)
         {
-            cout << "Yeah!!Finally,We won!" << endl;
+            if(!getSilentMode())
+                cout << "Yeah!!Finally,We won!" << endl;
             return true;
         }
         else if (aliens->get_count() != 0 && humans->get_count() == 0)
         {
-            cout << "We lost !!!!!!!!!" << endl;
-            return true;
+            if (!getSilentMode())
+                cout << "We lost !!!!!!!!!" << endl;
+                return true;
         }
         else if (aliens->get_count() == 0 && humans->get_count() == 0)
         {
-            cout << " The fight ended with Draw" << endl;
+            if (!getSilentMode())
+                cout << " The fight ended with Draw" << endl;
         }
         else 
         {

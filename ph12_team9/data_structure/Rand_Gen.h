@@ -11,7 +11,13 @@ private:
 	int E_Cap0, E_Cap1, E_Pow0, E_Pow1, E_Health0, E_Health1;
 	int A_Cap0, A_Cap1, A_Pow0, A_Pow1, A_Health0, A_Health1;
 	Game* game_ptr;
-
+	int AD_total;
+	int AM_total;
+	int AS_total;
+	int ES_total;
+	int ET_total;
+	int EG_total;
+	int HU_total;
 public:
 	Rand_Gen(Game* game);
 	void setN(int x);
@@ -31,6 +37,13 @@ public:
 	void A_Health(int x0,int x1);
 	int get_E_Pow0();
 	int get_E_Pow1();
+	int getAD_total();
+	int getAM_total();
+	int getAS_total();
+	int getES_total();
+	int getET_total();
+	int getEG_total();
+	int getHU_total();
 	armyUnit* generate_earth_unit(int join_time);
 	armyUnit* generate_alien_unit(int join_time);
 	//int find_in_queue(LinkedQueue<int> queue, int index);
