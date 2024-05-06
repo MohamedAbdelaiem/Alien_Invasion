@@ -8,7 +8,7 @@ AllienSoldier::AllienSoldier(int id) :armyUnit(id)
 AllienSoldier::AllienSoldier(int id, int join_time, int Health, int power, int attackC,unitType type,Game* game) :armyUnit(id, join_time, Health, power, attackC,type,game)
 {
 }
-void AllienSoldier::Attack()
+bool AllienSoldier::Attack()
 {
 	LinkedQueue<armyUnit*>temp;
 	EarthArmy* EarthA = game_ptr->get_humans_pointer();
@@ -53,4 +53,12 @@ void AllienSoldier::Attack()
 		EarthA->addUnit(tempPtr);
 	}
 	delete E;
+	if (i == 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }

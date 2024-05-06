@@ -89,19 +89,24 @@ void EarthArmy::print()
 	
 }
 
-void EarthArmy::attack()
+bool EarthArmy::attack()
 {
+	//flags for attacking functions
+	bool flag1 = false;
+	bool flag2 = false;
+	bool flag3 = false;
+	//========================================================================//
 	//Attacking for EarthSoldier
 	earthSoldier* ES;
 	if(soldiers->peek(ES))   //--> peek one EarthSoldier from ES list 
-		ES->Attack();        //--> make it attack 
+		flag1=ES->Attack();        //--> make it attack 
 	//============================================
 	 
 	
 	//Attacking for Tank
 	tank* ET;
 	if(tanks->peek(ET))   //--> peek one Tank from ET list 
-	ET->Attack();        //--> make it attack 
+		flag2=ET->Attack();        //--> make it attack 
 	//============================================
 	 
 	
@@ -109,13 +114,14 @@ void EarthArmy::attack()
 	Gunnery* EG;
 	int x;
 	if(Gunneries->peek(EG,x))   //--> peek one Gunnery from EG list 
-	EG->Attack();        //--> make it attack 
+		flag3=EG->Attack();        //--> make it attack 
 	//============================================
 	Heal_Soldier* HU;
 	if (HL->pop(HU))
 	{
 		HU->Attack();
 	}
+	return(flag1 || flag2 || flag3);
 
 }
 

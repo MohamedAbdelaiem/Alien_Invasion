@@ -7,6 +7,6 @@ class AllienSoldier : public armyUnit
 public:
 	AllienSoldier(int id = 0);
 	AllienSoldier(int id, int join_time, int Health, int power, int attackC,unitType type,Game* game);
-	virtual void Attack();
+	virtual bool Attack();
 };
 #endif

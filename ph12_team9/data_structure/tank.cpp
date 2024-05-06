@@ -13,7 +13,7 @@ tank::tank(int id, int join_time, int Health, int power, int attackC, unitType t
 	start_to_attack_AS = false;
 }
 
-void tank::Attack()
+bool tank::Attack()
 {
 
 	AlienArmy* alienArmyList;        // a list for AlienArmy
@@ -23,7 +23,7 @@ void tank::Attack()
 	LinkedQueue<AllienSoldier*> print_AS;  //list for all attacked AS units by this ET at this time step
 	LinkedQueue<monsters*> print_AM;  //list for all attacked AM units by this ET at this time step
 	int remain = attackCapacity;
-
+	bool flag_attack = false;
 	alienArmyList = game_ptr->get_aliens_pointer();
 	EarthArmyList = game_ptr->get_humans_pointer();
 
@@ -51,6 +51,7 @@ void tank::Attack()
 				{
 					game_ptr->add_to_killed_list(AS);                             // add to the Killedlist if it's killed
 				}
+				flag_attack = true;
 				remain--;
 			}
 			else break;
@@ -99,6 +100,7 @@ void tank::Attack()
 			{
 				game_ptr->add_to_killed_list(AM);                 // add to the Killedlist if it's killed
 			}
+			flag_attack = true;
 		}
 		else break;
 	}
@@ -110,6 +112,14 @@ void tank::Attack()
 	while (templist_AM.dequeue(am))
 	{
 		alienArmyList->addUnit(am);        // moves all units from templist to its original list
+	}
+	if (flag_attack)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 

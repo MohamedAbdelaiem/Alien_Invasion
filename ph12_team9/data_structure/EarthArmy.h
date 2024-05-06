@@ -23,7 +23,7 @@ public:
 	virtual void addUnit(armyUnit* unit) ;
 	virtual void deleteUnit(armyUnit*& unit) ;
 	virtual void print() ;
-	virtual void attack() ;
+	virtual bool attack() ;
 	virtual int getCountForES() ;//get the number of Earth Soldiers
 	bool peek_unit(armyUnit*& unit);
 	virtual int get_count();

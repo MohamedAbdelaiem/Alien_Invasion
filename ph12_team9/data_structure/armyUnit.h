@@ -48,7 +48,7 @@ public:
 	virtual int get_destruction_delay() const;
 	virtual int get_first_attack_delay() const;
 	virtual int get_battle_time() const;
-	virtual void Attack()=0;
+	virtual bool Attack()=0;
 	void set_time_UML(int time);
 	int get_time_UML();
 	friend ostream& operator<<(ostream& os,armyUnit* ptr);

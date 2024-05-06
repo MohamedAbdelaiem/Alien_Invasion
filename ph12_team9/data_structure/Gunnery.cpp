@@ -9,7 +9,7 @@ Gunnery::Gunnery(int id, int join_time, int Health, int power, int attackC, unit
 {
 }
 
-void Gunnery::Attack()
+bool Gunnery::Attack()
 {
 	AlienArmy* alienArmyList = this->game_ptr->get_aliens_pointer();        // a list for AlienArmy
 	armyUnit* AM = new monsters;
@@ -64,4 +64,12 @@ void Gunnery::Attack()
 	while (temp.dequeue(tempPtr))
 		alienArmyList->addUnit(tempPtr);
 	delete A;
+	if (i == 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }

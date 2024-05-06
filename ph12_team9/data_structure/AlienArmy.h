@@ -25,7 +25,7 @@ public:
 	virtual void addUnit(armyUnit* unit);//add a general unit to its list
 	virtual void deleteUnit(armyUnit*& unit);//remove a general unit from its list
 	virtual void print();//print all lists
-	virtual void attack();//attack earth army
+	virtual bool attack();//attack earth army
 	virtual int getCountForAS();//Get the number of Alien Soldiers
 	bool delete_two_drones(armyUnit*& drone1, armyUnit*& drone2);//delete two units(drones)
 	bool delete_first_or_last_drone(Drones*& drone1);//delete drone once from front and once from back

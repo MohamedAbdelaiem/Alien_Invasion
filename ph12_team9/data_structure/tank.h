@@ -9,9 +9,7 @@ class tank :public armyUnit
 public:
 	tank(int id=0);
 	tank(int id, int join_time, int Health, int power, int attackC, unitType type, Game* game);
-
-	virtual void Attack();
-
+	virtual bool Attack();
 };
 
 #endif

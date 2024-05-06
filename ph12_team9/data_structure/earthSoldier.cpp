@@ -11,14 +11,14 @@ earthSoldier::earthSoldier(int id, int join_time, int Health, int power, int att
 {
 }
 
-void earthSoldier::Attack()
+bool earthSoldier::Attack()
 {
 	AlienArmy* alienArmyList;        // a list for AlienArmy
 	LinkedQueue<AllienSoldier*> templist;  //templist
 	LinkedQueue<AllienSoldier*> print;  //list for all attacked units by this ES at this time step
 	armyUnit* AS = new AllienSoldier;   // allocate an AS to do dynamic_cast
 	armyUnit* A = AS;
-
+	bool flag_attack=false;
 	alienArmyList = this->game_ptr->get_aliens_pointer();    //get pointer to the AllienArmy from the game class
 	
 	for (int i = 0; i < this->attackCapacity; i++)
@@ -41,6 +41,7 @@ void earthSoldier::Attack()
 			{
 				game_ptr->add_to_killed_list(AS);                             // add to the Killedlist if it's killed
 			}
+			flag_attack = true;
 		}
 		else
 		{
@@ -58,7 +59,14 @@ void earthSoldier::Attack()
 	{
 		alienArmyList->addUnit(as);        // moves all units from templist to its original list
 	}
-	
+	if (flag_attack)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 
 }
 

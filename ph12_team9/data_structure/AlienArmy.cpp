@@ -70,34 +70,45 @@ void AlienArmy::print()
 	queue_drones->print_list();
 }
 
-void AlienArmy::attack()						
+bool AlienArmy::attack()
 {
+	//flags for attacking functions
+	bool flag1=false;
+	bool flag2=false;
+	bool flag3=false;
+	bool flag4=false;
+	//========================================================================//
+	/*attacking of alien soldiers*/
 	armyUnit* AS = new AllienSoldier;
 	armyUnit* E = AS;
 	if (peek_unit(AS))
 	{
-		AS->Attack();
+		flag1=AS->Attack();
 	}
 	delete E;
+	//========================================================================//
+	/*attacking of monsters*/
 	armyUnit* m = new monsters;
-	
 	E = m;
 	if (peek_unit(m))
 	{
-		m->Attack();
+		flag4=m->Attack();
 	}
 	delete E;
+	//========================================================================//
+	/*attacking of drones*/
 	armyUnit* D1 = new Drones;
 	armyUnit* D2 = new Drones;
 	E = D1;
 	armyUnit* E2 = D2;
 	if (peek_two_drones(D1, D2))
 	{
-		D1->Attack();
-		D2->Attack();
+		flag2=D1->Attack();
+		flag3=D2->Attack();
 	}
 	delete E, E2;
-
+	//========================================================================//
+	return(flag1 || flag2 || flag3 || flag4);
 
 }
 int AlienArmy::getCountForAS()

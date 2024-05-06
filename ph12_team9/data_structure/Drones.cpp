@@ -8,26 +8,37 @@ Drones::Drones(int id, int join_time, int Health, int power, int attackC,unitTyp
 {
 }
 
-void Drones::Attack()
+bool Drones::Attack()
 {
-	int remain = 0;
-	ArrayStack<tank*>temp_list_tank;
-	priQueue<Gunnery*>temp_list_gunnery;
-	LinkedQueue<armyUnit*>print;
-	for (int i = 0; i < attackCapacity / 2; i++)
+	ArrayStack<tank*>temp_list_tank;    //temp list for tanks
+	LinkedQueue<Gunnery*>temp_list_gunnery; //temp list fir gunneries
+	LinkedQueue<armyUnit*>print;   //List fo printing all killed units
+	armyUnit* EG = new Gunnery;  // allocate an EG to do dynamic_cast
+	armyUnit* E = EG;
+	int i = 0;
+	while ( i < attackCapacity / 2)
 	{
-		armyUnit* ES = new Gunnery;
-		armyUnit* E = ES;
-		game_ptr->get_humans_pointer()->deleteUnit(ES);
-		if (ES)
+		game_ptr->get_humans_pointer()->deleteUnit(EG);                             //->delete a unit from its list to attack it
+		if (EG) //checking for NULL 
 		{
-			temp_list_gunnery.enqueue(dynamic_cast<Gunnery*>(ES), ES->getHealth()+ES->getPower());
-			print.enqueue(ES);
+			EG->set_attacked_time(game_ptr->get_current_time());                    //->set the first attacked time
+			EG->setHealth(EG->getHealth() - ((Power * health) / 100) / float(sqrt(EG->getHealth())));  //->set the health of the attacked unit with the damage
+			EG->set_first_attack_delay();									//->set the first attack delay
+			print.enqueue(EG);												//->add to print list
+		    if (EG->getHealth() > 0)                                       //->if he didnt killed put it in temp list as a place holder
+			{
+				temp_list_gunnery.enqueue(dynamic_cast<Gunnery*>(EG));
+			}
+			else //add to killed list
+			{
+				game_ptr->add_to_killed_list(EG);
+			}
+			i++;  //increasing the counter
 		}
 		else
-			break;
-		delete E;
+			break;  //EG is NULL pointer
 	}
+	delete E;
 	if (!game_ptr->getSilentMode())
 	{
 		cout << "AD " << ID << " shots [ ";
@@ -39,67 +50,65 @@ void Drones::Attack()
 		}
 		cout << "]";
 	}
-	remain = attackCapacity - temp_list_gunnery.getCount();
-	for (int i = 0; i < remain; i++)
+	armyUnit* t = new tank;
+	E = t;
+	while (i < attackCapacity)
 	{
-		armyUnit* Tank = new tank;
-		armyUnit* E = Tank;
-		game_ptr->get_humans_pointer()->deleteUnit(Tank);
-		if (Tank)
+		game_ptr->get_humans_pointer()->deleteUnit(t);                             //->delete a unit from its list to attack it
+		if (t) //checking for NULL 
 		{
-			temp_list_tank.push(dynamic_cast<tank*>(Tank));
-			print.enqueue(Tank);
+			t->set_attacked_time(game_ptr->get_current_time());                    //->set the first attacked time
+			t->setHealth(t->getHealth() - ((Power * health) / 100) / float(sqrt(t->getHealth())));  //->set the health of the attacked unit with the damage
+			t->set_first_attack_delay();														//->set the first attack delay
+			print.enqueue(t);																	//->add to print list
+			if (float(t->getHealth()) / t->getOrigHealth() < 0.2 && t->getHealth() > 0)            //->check for inserting in UML list
+			{
+				game_ptr->add_to_UML(t, -1000);                   //->add to uml list and set his piriority
+				t->set_time_UML(game_ptr->get_current_time());                  //->set time for entering the UML
+			}
+			else if (t->getHealth() > 0)                                       //->if he didnt killed put it in temp list as a place holder
+			{
+				temp_list_tank.push(dynamic_cast<tank*>(t));
+			}
+			else //->add to killed list
+			{
+				game_ptr->add_to_killed_list(t);
+			}
+			i++;  //->increasing the counter
 		}
 		else
 			break;
-		delete E;
 	}
-	if (!game_ptr->getSilentMode())
+	delete E;
+
+	if (!game_ptr->getSilentMode())   
 	{
-		cout << " [ ";
+		cout << "[ ";
 		while (!print.isEmpty())
 		{
-			armyUnit* E;
 			print.dequeue(E);
 			cout << E << " ";
 		}
 		cout << "]" << endl;
 	}
-	while (!temp_list_gunnery.isEmpty())
+	while (!temp_list_gunnery.isEmpty())  //return all gunneries from its templist to its original list
 	{
-		Gunnery* ES; int x;
-		temp_list_gunnery.dequeue(ES,x);
-		ES->set_attacked_time(game_ptr->get_current_time());
-		ES->setHealth(ES->getHealth() - ((Power * health) / 100) / (sqrt(ES->getHealth())));
-		ES->set_first_attack_delay();
-		if (ES->getHealth() == 0)
-		{
-			game_ptr->add_to_killed_list(ES);
-		}
-		else
-		{
-			game_ptr->get_humans_pointer()->addUnit(ES);
-		}
+		Gunnery* ES1;
+		temp_list_gunnery.dequeue(ES1);
+		game_ptr->get_humans_pointer()->addUnit(ES1);
 	}
-	while (!temp_list_tank.isEmpty())
+	while (!temp_list_tank.isEmpty())    //return all tanks from its templist to its original list
 	{
-		tank* t;
-		temp_list_tank.pop(t);
-		t->setHealth(t->getHealth() - ((Power * health) / 100) / (sqrt(t->getHealth())));
-		t->set_attacked_time(game_ptr->get_current_time());
-		t->set_first_attack_delay();
-		if ((float(t->getHealth()) / t->getOrigHealth() < 0.2) && (t->getHealth() > 0))
-		{
-			game_ptr->add_to_UML(t, -1000);
-			t->set_time_UML(game_ptr->get_current_time());
-		}
-		else if (t->getHealth() == 0)
-		{
-			game_ptr->add_to_killed_list(t);
-		}
-		else
-		{
-			game_ptr->get_humans_pointer()->addUnit(t);
-		}
+		tank* tank;
+		temp_list_tank.pop(tank);
+		game_ptr->get_humans_pointer()->addUnit(tank);
+	}
+	if (i == 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
 	}
 }

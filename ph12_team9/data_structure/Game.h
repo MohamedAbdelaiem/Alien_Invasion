@@ -22,7 +22,7 @@ private:
 	bool silentMode;
 public:
 	Game(string fileName ,bool silentMode,string out_file);
-	void attack();	
+	bool attack();	
 	void print_lists();
 	void generate();
 	void increament_time();
@@ -40,7 +40,7 @@ public:
 	EarthArmy* get_humans_pointer();
 	void generate_output_file(string filename);
 	void add_to_file(armyUnit* unit);
-	bool check_winner();
+	bool check_winner(bool flag=true);
 	~Game();
 
 
