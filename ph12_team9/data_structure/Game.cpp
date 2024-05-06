@@ -16,6 +16,7 @@ Game::Game(string fileName,bool silentMode,string outfile)//initializes the syst
     numOfHealedUnits = 0;
     loadFromInput(fileName);
     generate_output_file(outfile);
+    
     killed_ES = 0, killed_ET = 0, killed_EG = 0, killed_AS = 0, killed_AD = 0, killed_AM = 0, killed_HU = 0, E_Df_total = 0, E_Dd_total = 0, E_Db_total = 0, A_Df_total = 0, A_Dd_total = 0, A_Db_total = 0;
 }
 
@@ -40,6 +41,7 @@ void Game::print_lists()//print all lists
 
 void Game::generate()//generate alien and earth units
 {
+    
     srand(time(0));
     int a = rand() % 100 + 1;
     if (a <= Prop)
@@ -47,7 +49,11 @@ void Game::generate()//generate alien and earth units
         for (int j = 0; j < N; j++)
         {
             armyUnit* a = random_generator->generate_earth_unit( current_time);
-            humans->addUnit(a);
+            if (a)
+            {
+                humans->addUnit(a);
+            }
+            
         }
     }
     a = rand() % 100 + 1;
@@ -55,9 +61,13 @@ void Game::generate()//generate alien and earth units
     {
         for (int j = 0; j < N; j++)
         {
-            aliens->addUnit(random_generator->generate_alien_unit(current_time));
+           armyUnit*b= random_generator->generate_alien_unit(current_time);
+           if (b)
+               aliens->addUnit(b);
+          
         }
     }
+   
 }
 
 void Game::increament_time()
@@ -96,7 +106,22 @@ void Game::simulate()
     while (true)
     {
         bool check_draw = false;
-        this->generate();
+        if (random_generator->id_earth_total() != 1000 || random_generator->id_alien_total() != 3000)
+        {
+            this->generate();
+        }
+        if (random_generator->id_earth_total() == 1000 && random_generator->id_alien_total() == 3000)
+        {
+            if (silentMode)
+            {
+                outfile << "The generation has reached the maximum number of ids for both earth and aliens" << endl;
+            }
+            else
+            {
+                    cout<< "The generation has reached the maximum number of ids for both earth and aliens" << endl;
+            }
+        }
+        
         if (!silentMode)
             this->print_lists();
 
@@ -112,7 +137,6 @@ void Game::simulate()
             cout << "***********\t\tpress enter to move to the next step\t\t******************\n\n\n";
             while (_getch() != 13) {};
         }
-        this->current_time++;
         if (check_winner(check_draw))
         {
             outfile << "//////////////////////////////////////////////////Earth Army////////////////////////////////////////////////////" << endl;
@@ -237,6 +261,7 @@ void Game::simulate()
             }
             break;
         }
+    this->current_time++;
     }
 }
 

@@ -110,46 +110,58 @@ int Rand_Gen::getHU_total()
 {
     return HU_total;
 }
+int Rand_Gen::id_earth_total()
+{
+    return id_earth;
+}
+int Rand_Gen::id_alien_total()
+{
+    return id_alien;
+}
 //for earth army:
 //arr[9]&&arr[10]---->power 
 //arr[11]&&arr[12]--->health
 //arr[13]&&arr[14]--->attack capacity
 armyUnit* Rand_Gen::generate_earth_unit(int join_time)//generate earth unit
 {
-    int random_power = (rand() % (E_Pow1 -E_Pow0 +1) + E_Pow0);
-    int random_health = (rand() % (E_Health1 - E_Health0 + 1) + E_Health0);
-    int random_attack_capacity = (rand() % (E_Cap1 - E_Cap0 + 1) + E_Cap0);
-    int b = rand() % 100 + 1;
-    if (b <= ES)
+    if (id_earth != 1000)
     {
-        //generate soldier
-       earthSoldier* new_ES = new earthSoldier(id_earth++, join_time, random_health, random_power, random_attack_capacity, earth_soldier,game_ptr);
-       ES_total++;
-        return new_ES;
-    }
-    else if ( b <= ES+ET)
-    {
-        //generate tank
-        tank* new_ET = new tank(id_earth++, join_time, random_health, random_power, random_attack_capacity, Tank,game_ptr);
-        ET_total++;
-        return new_ET;
+        int random_power = (rand() % (E_Pow1 - E_Pow0 + 1) + E_Pow0);
+        int random_health = (rand() % (E_Health1 - E_Health0 + 1) + E_Health0);
+        int random_attack_capacity = (rand() % (E_Cap1 - E_Cap0 + 1) + E_Cap0);
+        int b = rand() % 100 + 1;
+        if (b <= ES)
+        {
+            //generate soldier
+            earthSoldier* new_ES = new earthSoldier(id_earth++, join_time, random_health, random_power, random_attack_capacity, earth_soldier, game_ptr);
+            ES_total++;
+            return new_ES;
+        }
+        else if (b <= ES + ET)
+        {
+            //generate tank
+            tank* new_ET = new tank(id_earth++, join_time, random_health, random_power, random_attack_capacity, Tank, game_ptr);
+            ET_total++;
+            return new_ET;
 
+        }
+        else  if (b <= ES + ET + EG)
+        {
+            //generate gunnery
+            Gunnery* new_gunnery = new Gunnery(id_earth++, join_time, random_health, random_power, random_attack_capacity, gunnery, game_ptr);
+            EG_total++;
+            return new_gunnery;
+        }
+        else
+        {
+            Heal_Soldier* new_heal = new Heal_Soldier(id_earth++, join_time, random_health, random_power, random_attack_capacity, Heal_soldier, game_ptr);
+            HU_total++;
+            return new_heal;
+        }
+
+        //random the data of this unit according of its range
+        
     }
-    else  if(b<=ES+ET+EG)
-    {
-        //generate gunnery
-        Gunnery* new_gunnery = new Gunnery(id_earth++, join_time, random_health, random_power, random_attack_capacity,gunnery, game_ptr);
-        EG_total++;
-        return new_gunnery;
-    }
-    else
-    {
-        Heal_Soldier* new_heal = new Heal_Soldier(id_earth++, join_time, random_health, random_power, random_attack_capacity, Heal_soldier, game_ptr);
-        HU_total++;
-        return new_heal;
-    }
-   
-    //random the data of this unit according of its range
     return nullptr;
 }
 //for alien army:
@@ -158,32 +170,36 @@ armyUnit* Rand_Gen::generate_earth_unit(int join_time)//generate earth unit
 //arr[19]&&arr[20]--->attack capacity
 armyUnit* Rand_Gen::generate_alien_unit(int join_time)//generate a random alien unit
 {
-    int random_power = (rand() % (A_Pow1 - A_Pow0 + 1) + A_Pow0);
-    int random_health = (rand() % (A_Health1 - A_Health0 + 1) + A_Health0);
-    int random_attack_capacity = (rand() % (A_Cap1 - A_Cap0 + 1) + A_Cap0);
+    if (id_alien != 3000)
+    {
+        int random_power = (rand() % (A_Pow1 - A_Pow0 + 1) + A_Pow0);
+        int random_health = (rand() % (A_Health1 - A_Health0 + 1) + A_Health0);
+        int random_attack_capacity = (rand() % (A_Cap1 - A_Cap0 + 1) + A_Cap0);
 
-    int b = rand() % 100 + 1;
-    if (b <= AS)
-    {
-        //generate soldier
-        AllienSoldier* new_allienS = new AllienSoldier(id_alien++, join_time, random_health, random_power, random_attack_capacity,alien_soldier, game_ptr);
-        AS_total++;
-        return new_allienS;
-    }
-    
-    else if (b <= AS+AM)
-    {
-        //generate monster
-        monsters* new_monster = new monsters(id_alien++, join_time, random_health, random_power, random_attack_capacity,monster, game_ptr);
-        AM_total++;
-        return new_monster;
-    }
-    else
-    {
-        //generate drone
-        Drones* new_drone = new Drones(id_alien++, join_time, random_health, random_power, random_attack_capacity,drone, game_ptr);
-        AD_total++;
-        return new_drone;
+        int b = rand() % 100 + 1;
+        if (b <= AS)
+        {
+            //generate soldier
+            AllienSoldier* new_allienS = new AllienSoldier(id_alien++, join_time, random_health, random_power, random_attack_capacity, alien_soldier, game_ptr);
+            AS_total++;
+            return new_allienS;
+        }
+
+        else if (b <= AS + AM)
+        {
+            //generate monster
+            monsters* new_monster = new monsters(id_alien++, join_time, random_health, random_power, random_attack_capacity, monster, game_ptr);
+            AM_total++;
+            return new_monster;
+        }
+        else
+        {
+            //generate drone
+            Drones* new_drone = new Drones(id_alien++, join_time, random_health, random_power, random_attack_capacity, drone, game_ptr);
+            AD_total++;
+            return new_drone;
+        }
+        
     }
     return nullptr;
 }

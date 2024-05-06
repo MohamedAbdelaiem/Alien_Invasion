@@ -44,6 +44,8 @@ public:
 	int getET_total();
 	int getEG_total();
 	int getHU_total();
+	int id_earth_total();
+	int id_alien_total();
 	armyUnit* generate_earth_unit(int join_time);
 	armyUnit* generate_alien_unit(int join_time);
 	//int find_in_queue(LinkedQueue<int> queue, int index);
