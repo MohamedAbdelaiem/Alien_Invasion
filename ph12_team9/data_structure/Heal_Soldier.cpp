@@ -24,14 +24,14 @@ bool Heal_Soldier::Attack()
 		{
 			int x;
 			uml->dequeue(unit,x);
-			if (game_ptr->get_current_time() - unit->get_time_UML() >= 10)
+			if (game_ptr->get_current_time() - unit->get_time_UML() > 10)
 			{
 				unit->setHealth(0);
 				game_ptr->add_to_killed_list(unit);
 			}
 			else
 			{
-				unit->setHealth(unit->getHealth() + ((this->Power * this->health / 100) / sqrt(unit->getHealth())));
+				unit->setHealth(unit->getHealth() + ((float(this->Power) * this->health / 100) / sqrt(unit->getHealth())));
 				try_to_heal->enqueue(unit->getID());
 				if (float(unit->getHealth()) / unit->getOrigHealth() > 0.2)
 				{
@@ -63,7 +63,7 @@ bool Heal_Soldier::Attack()
 		}
 		else uml->enqueue(unit, -1000);
 	}
-	if (!isEmpty)
+	if (attack_flag)
 	{
 		this->setHealth(0);
 		this->set_attacked_time(game_ptr->get_current_time());
@@ -71,6 +71,7 @@ bool Heal_Soldier::Attack()
 	}
 	else EarthPtr->addUnit(this);
 	delete tempList;
+	delete try_to_heal;
 	if (attack_flag)
 	{
 		return true;

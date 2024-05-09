@@ -25,7 +25,7 @@ bool Drones::Attack()
 			EG->setHealth(EG->getHealth() - ((Power * health) / 100) / float(sqrt(EG->getHealth())));  //->set the health of the attacked unit with the damage
 			EG->set_first_attack_delay();									//->set the first attack delay
 			print.enqueue(EG);												//->add to print list
-		    if (EG->getHealth() > 0)                                       //->if he didnt killed put it in temp list as a place holder
+		    if (EG->getHealth() > 0)                                       //->if he wasn't killed put it in temp list as a place holder
 			{
 				temp_list_gunnery.enqueue(dynamic_cast<Gunnery*>(EG));
 			}

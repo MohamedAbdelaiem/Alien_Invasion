@@ -41,7 +41,7 @@ bool tank::Attack()
 
 				print_AS.enqueue(dynamic_cast <AllienSoldier*> (AS));     //add this AS to the print list
 
-				double damage = (this->Power * this->health / 100) / sqrt(AS->getHealth());   //calc the damage
+				double damage = (float(this->Power) * this->health / 100) / sqrt(AS->getHealth());   //calc the damage
 				AS->setHealth(AS->getHealth() - damage);                                     //set the health after the demage
 				if (AS->getHealth() > 0)
 				{
@@ -49,7 +49,7 @@ bool tank::Attack()
 				}
 				else
 				{
-					game_ptr->add_to_killed_list(AS);                             // add to the Killedlist if it's killed
+					game_ptr->add_to_killed_list(AS);                             // add to the Killedlist if it was killed
 				}
 				flag_attack = true;
 				remain--;
@@ -90,7 +90,7 @@ bool tank::Attack()
 
 			print_AM.enqueue(dynamic_cast <monsters*> (AM));      //add this AM to the print list
 
-			double damage = (this->Power * this->health / 100) / sqrt(AM->getHealth());   //calc the damage
+			double damage = (float(this->Power) * this->health / 100) / sqrt(AM->getHealth());   //calc the damage
 			AM->setHealth(AM->getHealth() - damage);              //set the health after the demage
 			if (AM->getHealth() > 0)
 			{

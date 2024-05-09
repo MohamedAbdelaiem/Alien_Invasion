@@ -31,7 +31,7 @@ bool AllienSoldier::Attack()
 			ES->setHealth(ES->getHealth() - (this->Power * this->health / 100) / sqrt(ES->getHealth()));
 			if (float(ES->getHealth()) / ES->getOrigHealth() < 0.2 && ES->getHealth() > 0)
 			{
-				game_ptr->add_to_UML(ES, -ES->getHealth());
+				game_ptr->add_to_UML(ES, -1*ES->getHealth());
 				ES->set_time_UML(game_ptr->get_current_time());
 			}
 			else if (ES->getHealth())
