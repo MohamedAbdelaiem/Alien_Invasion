@@ -7,6 +7,7 @@ armyUnit::armyUnit( int id) :ID(id)
     this->setHealth(0);
     this->setPower(0);
     this->setAttackCapacity(0);
+    attacked_time = -1;
 }
 armyUnit::armyUnit(int id, int join_time, int Health, int power, int attackC,unitType type,Game*game)
 {
@@ -19,6 +20,7 @@ armyUnit::armyUnit(int id, int join_time, int Health, int power, int attackC,uni
     this-> game_ptr = game;
     attacked_time = -1;
     this->orig_health = Health;
+    time_joining_UML = 0;
 }
 void armyUnit::setID(int id)
 {

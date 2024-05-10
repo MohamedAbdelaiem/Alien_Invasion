@@ -112,13 +112,9 @@ void Game::simulate()
         }
         if (random_generator->id_earth_total() == 1000 && random_generator->id_alien_total() == 3000)
         {
-            if (silentMode)
+            if (!silentMode)
             {
-                outfile << "The generation has reached the maximum number of ids for both earth and aliens" << endl;
-            }
-            else
-            {
-                    cout<< "The generation has reached the maximum number of ids for both earth and aliens" << endl;
+                cout << "The generation has reached the maximum number of ids for both earth and aliens" << endl;
             }
         }
         
@@ -259,6 +255,13 @@ void Game::simulate()
                     cout << " The fight ended with Draw" << endl;
                 outfile << "The fight has been ended with Draw" << endl;
             }
+            if (random_generator->id_earth_total() == 1000 && random_generator->id_alien_total() == 3000)
+            {
+                if (silentMode)
+                {
+                    outfile << "The generation has reached the maximum number of ids for both earth and aliens" << endl;
+                }
+            }
             break;
         }
     this->current_time++;
@@ -372,7 +375,7 @@ void Game::add_to_killed_list(armyUnit* unit)
         E_Db_total += unit->get_battle_time();
         E_Df_total += unit->get_first_attack_delay();
         break;
-    case(Tank):
+    case(Tank): 
         killed_ET++;
         E_Dd_total += unit->get_destruction_delay();
         E_Db_total += unit->get_battle_time();
