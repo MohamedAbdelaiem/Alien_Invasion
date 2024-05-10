@@ -21,6 +21,7 @@ protected:
 	int DF, Dd, Db;//first attacked delay,destruction delay,battle time
 	Game* game_ptr;
 	int time_joining_UML;
+	bool infection,immunity;
 public:
 	armyUnit(int id);
 	armyUnit(int id, int join_time, int Health, int power, int attackC,unitType type,Game*game );
@@ -51,6 +52,10 @@ public:
 	virtual bool Attack()=0;
 	void set_time_UML(int time);
 	int get_time_UML();
+	virtual void set_infection(bool flag);
+	virtual bool get_infection();
+	virtual void set_immunity(bool flag);
+	virtual bool get_immunity();
 	friend ostream& operator<<(ostream& os,armyUnit* ptr);
 };
 #endif

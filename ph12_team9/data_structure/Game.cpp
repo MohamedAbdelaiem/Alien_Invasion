@@ -14,6 +14,7 @@ Game::Game(string fileName,bool silentMode,string outfile)//initializes the syst
     UML = new priQueue<armyUnit*>;
 	current_time = 1;
     numOfHealedUnits = 0;
+    numOfInfectedSoldiers = 0;
     loadFromInput(fileName);
     generate_output_file(outfile);
     
@@ -124,6 +125,8 @@ void Game::simulate()
         check_draw = this->attack();
         if (!silentMode)
         {
+            cout << "======================infected_units precntage==================\n";
+            cout << "The precntage is " << float(numOfInfectedSoldiers) / humans->getCountForES()<<"\n";
             cout << "==================== UML ====================\n";
             cout << UML->getCount() << " Units ";
             UML->print_list();
@@ -422,6 +425,13 @@ void Game::add_to_UML(armyUnit* unit, int priority)
     if(unit)
     UML->enqueue(unit, priority);
 }
+
+void Game::increase_numOfInfectedSoldiers()
+{
+    numOfInfectedSoldiers++;
+}
+
+
 
 priQueue<armyUnit*>* Game::get_UML()
 {

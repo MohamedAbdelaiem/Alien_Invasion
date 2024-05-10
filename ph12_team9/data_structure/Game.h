@@ -18,7 +18,7 @@ private:
 	ofstream outfile;
 	int current_time;
 	int N, Prop,killed_ES, killed_ET, killed_EG, killed_AS, killed_AD, killed_AM, killed_HU,E_Df_total, E_Dd_total, E_Db_total,  A_Df_total, A_Dd_total, A_Db_total;
-	int numOfHealedUnits;
+	int numOfHealedUnits,numOfInfectedSoldiers;
 	bool silentMode;
 	
 public:
@@ -36,6 +36,7 @@ public:
 	bool loadFromInput(string fileName);
 	void add_to_killed_list(armyUnit* unit);
 	void add_to_UML(armyUnit* unit, int priority);
+	void increase_numOfInfectedSoldiers();
 	priQueue<armyUnit*>* get_UML();
 	AlienArmy* get_aliens_pointer();
 	EarthArmy* get_humans_pointer();

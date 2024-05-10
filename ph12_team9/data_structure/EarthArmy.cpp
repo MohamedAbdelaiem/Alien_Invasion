@@ -14,7 +14,6 @@ void EarthArmy::addUnit(armyUnit* unit)
 {
 	if (earthSoldier* S = (dynamic_cast<earthSoldier*>(unit)))  //Add an Earth Soldier 
 	{
-		
 		soldiers->enqueue(S);                                      
 	}
 	else if (tank* T = (dynamic_cast<tank*>(unit)))          //Add a Tank

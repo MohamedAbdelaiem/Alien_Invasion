@@ -52,7 +52,7 @@ bool earthSoldier::Attack()
 	AllienSoldier* as;
 	if (!game_ptr->getSilentMode())
 	{
-		cout << "ES " << this->ID << " shots ";        //--> print the attacked units
+		cout << "ES " << this << " shots ";        //--> print the attacked units
 		print.print_list();
 	}
 	while (templist.dequeue(as))

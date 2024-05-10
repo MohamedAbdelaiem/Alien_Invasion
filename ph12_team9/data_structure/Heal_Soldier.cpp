@@ -1,4 +1,4 @@
-#include "Heal_Soldier.h"
+	#include "Heal_Soldier.h"
 #include "Game.h"
 
 Heal_Soldier::Heal_Soldier(int id):armyUnit(id)
@@ -13,7 +13,7 @@ bool Heal_Soldier::Attack()
 {
 	priQueue<armyUnit*>* uml = game_ptr->get_UML();
 	LinkedQueue<armyUnit*>* tempList = new LinkedQueue<armyUnit*>;
-	LinkedQueue<int>* try_to_heal = new LinkedQueue<int>;
+	LinkedQueue<armyUnit*>* try_to_heal = new LinkedQueue<armyUnit*>;
 	EarthArmy* EarthPtr = game_ptr->get_humans_pointer();
 	bool isEmpty = uml->isEmpty();
 	bool attack_flag = false;
@@ -31,10 +31,20 @@ bool Heal_Soldier::Attack()
 			}
 			else
 			{
-				unit->setHealth(unit->getHealth() + ((float(this->Power) * this->health / 100) / sqrt(unit->getHealth())));
-				try_to_heal->enqueue(unit->getID());
+				if (unit->get_infection())
+				{
+					unit->setHealth(unit->getHealth() + ((float(this->Power) * this->health / 200) / sqrt(unit->getHealth())));
+				}
+				else
+					unit->setHealth(unit->getHealth() + ((float(this->Power) * this->health / 100) / sqrt(unit->getHealth())));
+
+				try_to_heal->enqueue(unit);
 				if (float(unit->getHealth()) / unit->getOrigHealth() > 0.2)
 				{
+					if (unit->get_infection())	
+					{
+						unit->set_immunity(true);
+					}
 					EarthPtr->addUnit(unit);
 					game_ptr->incr_numOfHealedUnits();
 				}
@@ -52,7 +62,7 @@ bool Heal_Soldier::Attack()
 	}
 	if (!game_ptr->getSilentMode())
 	{
-		cout << "HU " << this->ID << " Heals ";
+		cout << "HU " << this << " Heals ";
 		try_to_heal->print_list();
 	}
 	while (tempList->dequeue(unit))

@@ -8,6 +8,7 @@ armyUnit::armyUnit( int id) :ID(id)
     this->setPower(0);
     this->setAttackCapacity(0);
     attacked_time = -1;
+    infection = false;
 }
 armyUnit::armyUnit(int id, int join_time, int Health, int power, int attackC,unitType type,Game*game)
 {
@@ -21,6 +22,7 @@ armyUnit::armyUnit(int id, int join_time, int Health, int power, int attackC,uni
     attacked_time = -1;
     this->orig_health = Health;
     time_joining_UML = 0;
+    infection = false;
 }
 void armyUnit::setID(int id)
 {
@@ -147,12 +149,39 @@ int armyUnit::get_time_UML()
     return this->time_joining_UML;
 }
 
+void armyUnit::set_infection(bool flag)
+{
+    infection = flag;
+}
+
+
+bool armyUnit::get_infection()
+{
+    return infection;
+}
+
+void armyUnit::set_immunity(bool flag)
+{
+    immunity = flag;
+}
+
+bool armyUnit::get_immunity()
+{
+    return immunity;
+}
+
 
 
 
 ostream& operator<<(ostream& os,   armyUnit* ptr)
 {
-    os << ptr->getID();
+    
+    if(ptr->get_infection())
+        os << "*" << ptr->getID()<<"*";
+    else
+        os << ptr->getID();
+    if (ptr->get_immunity())
+        ptr->set_infection(false);
     return os;
 }
 
