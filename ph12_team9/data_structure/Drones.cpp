@@ -12,7 +12,7 @@ bool Drones::Attack()
 {
 	ArrayStack<tank*>temp_list_tank;    //temp list for tanks
 	LinkedQueue<Gunnery*>temp_list_gunnery; //temp list fir gunneries
-	LinkedQueue<armyUnit*>print;   //List fo printing all killed units
+	LinkedQueue<int>print;   //List fo printing all attacked units
 	armyUnit* EG = new Gunnery;  // allocate an EG to do dynamic_cast
 	armyUnit* E = EG;
 	int i = 0;
@@ -24,7 +24,7 @@ bool Drones::Attack()
 			EG->set_attacked_time(game_ptr->get_current_time());                    //->set the first attacked time
 			EG->setHealth(EG->getHealth() - ((Power * health) / 100) / float(sqrt(EG->getHealth())));  //->set the health of the attacked unit with the damage
 			EG->set_first_attack_delay();									//->set the first attack delay
-			print.enqueue(EG);												//->add to print list
+			print.enqueue(EG->getID());												//->add to print list
 		    if (EG->getHealth() > 0)                                       //->if he wasn't killed put it in temp list as a place holder
 			{
 				temp_list_gunnery.enqueue(dynamic_cast<Gunnery*>(EG));
@@ -44,7 +44,7 @@ bool Drones::Attack()
 		cout << "AD " << ID << " shots [ ";
 		while (!print.isEmpty())
 		{
-			armyUnit* E;
+			int E;
 			print.dequeue(E);
 			cout << E << " ";
 		}
@@ -60,13 +60,13 @@ bool Drones::Attack()
 			t->set_attacked_time(game_ptr->get_current_time());                    //->set the first attacked time
 			t->setHealth(t->getHealth() - ((Power * health) / 100) / float(sqrt(t->getHealth())));  //->set the health of the attacked unit with the damage
 			t->set_first_attack_delay();														//->set the first attack delay
-			print.enqueue(t);																	//->add to print list
+			print.enqueue(t->getID());																	//->add to print list
 			if (float(t->getHealth()) / t->getOrigHealth() < 0.2 && t->getHealth() > 0)            //->check for inserting in UML list
 			{
 				game_ptr->add_to_UML(t, -1000);                   //->add to uml list and set his piriority
 				t->set_time_UML(game_ptr->get_current_time());                  //->set time for entering the UML
 			}
-			else if (t->getHealth() > 0)                                       //->if he didnt killed put it in temp list as a place holder
+			else if (t->getHealth() > 0)                                       //->if he wasn't killed put it in temp list as a place holder
 			{
 				temp_list_tank.push(dynamic_cast<tank*>(t));
 			}
@@ -86,6 +86,7 @@ bool Drones::Attack()
 		cout << "[ ";
 		while (!print.isEmpty())
 		{
+			int E;
 			print.dequeue(E);
 			cout << E << " ";
 		}

@@ -15,10 +15,11 @@ bool monsters::Attack()
 {
 	LinkedQueue<earthSoldier*>temp_list_soldiers; //temp list for earth soldiers
 	ArrayStack<tank*>temp_list_tank; //temp list for earth tanks
-	LinkedQueue<armyUnit*>print; //list for printing
 	armyUnit* ES = new earthSoldier; //// allocate an ES to do dynamic_cast
 	armyUnit* E = ES;
 	int i = 0;
+	if(!game_ptr->getSilentMode())
+		cout << "AM " << ID << " shots [ ";
 	while ( i < attackCapacity / 2)
 	{
 		game_ptr->get_humans_pointer()->deleteUnit(ES);                             //->delete a unit from its list to attack it
@@ -27,7 +28,8 @@ bool monsters::Attack()
 			ES->set_attacked_time(game_ptr->get_current_time());                    //->set the first attacked time
 			ES->setHealth(ES->getHealth() - ((Power * health) / 100) / float(sqrt(ES->getHealth())));  //->set the health of the attacked unit with the damage
 			ES->set_first_attack_delay(); //->set the first attack delay
-			print.enqueue(ES); //->add to print list
+			if (!game_ptr->getSilentMode())
+				cout << ES<<" ";	//print the attacked unit
 			if (float(ES->getHealth()) / ES->getOrigHealth() < 0.2 && ES->getHealth() > 0)            //->check for inserting in UML list
 			{
 				game_ptr->add_to_UML(ES, -1 * ES->getHealth());                   //->add to uml list and set his piriority
@@ -47,18 +49,8 @@ bool monsters::Attack()
 			break;
 	}
 	delete E;
-
-	if (!game_ptr->getSilentMode())  
-	{
-		cout << "AM " << ID << " shots [ ";
-		while (!print.isEmpty())
-		{
-			print.dequeue(E);
-			cout << E << " ";
-		}
-		cout << "] ";
-	}
-	
+	if(!game_ptr->getSilentMode())
+		cout << "] [ ";
 
 	armyUnit* t = new tank;
 	E = t;
@@ -71,7 +63,8 @@ bool monsters::Attack()
 			t->set_attacked_time(game_ptr->get_current_time());                    //->set the first attacked time
 			t->setHealth(t->getHealth() - ((Power * health) / 100) / float(sqrt(t->getHealth())));  //->set the health of the attacked unit with the damage
 			t->set_first_attack_delay(); //->set the first attack delay
-			print.enqueue(t); //->add to print list
+			if(!game_ptr->getSilentMode())
+				cout<<t<<" "; //-> print the attacked unit
 			if (float(t->getHealth()) / t->getOrigHealth() < 0.2 && t->getHealth() > 0)            //->check for inserting in UML list
 			{
 				game_ptr->add_to_UML(t, -1000);                   //->add to uml list and set his piriority
@@ -91,17 +84,8 @@ bool monsters::Attack()
 			break;
 	}
 	delete E;
-
-	if (!game_ptr->getSilentMode())   
-	{
-		cout << "[ ";
-		while (!print.isEmpty())
-		{
-			print.dequeue(E);
-			cout << E << " ";
-		}
-		cout << "]"<<endl;
-	}
+	if(!game_ptr->getSilentMode())
+		cout << "]" << endl;
 	while (!temp_list_soldiers.isEmpty()) //return all soldiers from its templist to its original list
 	{
 		earthSoldier* ES1;

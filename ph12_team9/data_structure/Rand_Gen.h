@@ -48,6 +48,5 @@ public:
 	int id_alien_total();
 	armyUnit* generate_earth_unit(int join_time);
 	armyUnit* generate_alien_unit(int join_time);
-	//int find_in_queue(LinkedQueue<int> queue, int index);
 };
 #endif

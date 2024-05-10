@@ -155,7 +155,7 @@ void armyUnit::set_infection(bool flag)
 }
 
 
-bool armyUnit::get_infection()
+bool armyUnit::get_infection()const
 {
     return infection;
 }
@@ -165,7 +165,7 @@ void armyUnit::set_immunity(bool flag)
     immunity = flag;
 }
 
-bool armyUnit::get_immunity()
+bool armyUnit::get_immunity()const
 {
     return immunity;
 }

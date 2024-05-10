@@ -53,9 +53,9 @@ public:
 	void set_time_UML(int time);
 	int get_time_UML();
 	virtual void set_infection(bool flag);
-	virtual bool get_infection();
+	virtual bool get_infection() const;
 	virtual void set_immunity(bool flag);
-	virtual bool get_immunity();
+	virtual bool get_immunity() const;
 	friend ostream& operator<<(ostream& os,armyUnit* ptr);
 };
 #endif

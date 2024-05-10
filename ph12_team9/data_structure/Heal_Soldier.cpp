@@ -13,11 +13,14 @@ bool Heal_Soldier::Attack()
 {
 	priQueue<armyUnit*>* uml = game_ptr->get_UML();
 	LinkedQueue<armyUnit*>* tempList = new LinkedQueue<armyUnit*>;
-	LinkedQueue<armyUnit*>* try_to_heal = new LinkedQueue<armyUnit*>;
 	EarthArmy* EarthPtr = game_ptr->get_humans_pointer();
 	bool isEmpty = uml->isEmpty();
 	bool attack_flag = false;
 	armyUnit* unit;
+	if (!game_ptr->getSilentMode())
+	{
+		cout << "HU " << this << " Heals [ ";        //--> print the attacked units
+	}
 	for (int i = 0; i < this->attackCapacity; i++)
 	{
 		if (!uml->isEmpty())
@@ -31,19 +34,19 @@ bool Heal_Soldier::Attack()
 			}
 			else
 			{
-				if (unit->get_infection())
+				if (unit->get_infection()) //->check for infected earth soldiers
 				{
-					unit->setHealth(unit->getHealth() + ((float(this->Power) * this->health / 200) / sqrt(unit->getHealth())));
+					unit->setHealth(unit->getHealth() + ((float(this->Power) * this->health / 200) / sqrt(unit->getHealth()))); //healing the infectd slower twice than the normal soldier
 				}
 				else
 					unit->setHealth(unit->getHealth() + ((float(this->Power) * this->health / 100) / sqrt(unit->getHealth())));
-
-				try_to_heal->enqueue(unit);
+				if(!game_ptr->getSilentMode())
+						cout<< unit<<" "; //->print the healed unit
 				if (float(unit->getHealth()) / unit->getOrigHealth() > 0.2)
 				{
 					if (unit->get_infection())	
 					{
-						unit->set_immunity(true);
+						unit->set_immunity(true);//gives the unit immunity to avoid be infected again
 					}
 					EarthPtr->addUnit(unit);
 					game_ptr->incr_numOfHealedUnits();
@@ -62,8 +65,7 @@ bool Heal_Soldier::Attack()
 	}
 	if (!game_ptr->getSilentMode())
 	{
-		cout << "HU " << this << " Heals ";
-		try_to_heal->print_list();
+		cout << "]\n";
 	}
 	while (tempList->dequeue(unit))
 	{
@@ -81,13 +83,5 @@ bool Heal_Soldier::Attack()
 	}
 	else EarthPtr->addUnit(this);
 	delete tempList;
-	delete try_to_heal;
-	if (attack_flag)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return attack_flag;
 }

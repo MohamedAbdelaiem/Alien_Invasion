@@ -126,7 +126,10 @@ void Game::simulate()
         if (!silentMode)
         {
             cout << "======================infected_units precntage==================\n";
-            cout << "The precntage is " << float(numOfInfectedSoldiers) / humans->getCountForES()<<"\n";
+            if (humans->getCountForES())
+                cout << "The precntage of infected soldiers is " << float(numOfInfectedSoldiers) / humans->getCountForES() << "\n";
+            else
+                cout << "The precntage of infected soldiers is " << "There isnot any earth soldier in the battle" << "\n";
             cout << "==================== UML ====================\n";
             cout << UML->getCount() << " Units ";
             UML->print_list();

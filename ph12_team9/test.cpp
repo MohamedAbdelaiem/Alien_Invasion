@@ -27,15 +27,15 @@ int main()
 	}
 
 	//generate is true
+	cout << "Enter the file name to generate units: ";
 	while (true)
 	{
-		cout << "Enter the file name to generate units: ";
 		cin >> fileName;
 		cout << endl;
 		file.open(fileName+".txt");
 		if (!file.is_open())
 		{
-			cout << "Enter the name again please :"<<endl;
+			cout << "Enter the name again please :";
 		}
 		else
 		{
