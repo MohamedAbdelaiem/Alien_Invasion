@@ -11,12 +11,14 @@ Gunnery::Gunnery(int id, int join_time, int Health, int power, int attackC, unit
 
 bool Gunnery::Attack()
 {
-	AlienArmy* alienArmyList = this->game_ptr->get_aliens_pointer();        // a list for AlienArmy
+	AlienArmy* alienArmyList = this->game_ptr->get_aliens_pointer();        // a pointer for AlienArmy
 	armyUnit* AM = new monsters;
-	armyUnit* A = AM;
+	armyUnit* A1 = AM;
 	armyUnit* tempPtr;
-	Drones* AD = nullptr;
+	armyUnit* AD = new Drones;
+	armyUnit* A2 = AD;
 	LinkedQueue<armyUnit*>temp;
+	QUEUE<armyUnit*>tempDrones;
 	int i = 0;
 	if (!game_ptr->getSilentMode())
 	{
@@ -44,26 +46,33 @@ bool Gunnery::Attack()
 	}
 	if (!game_ptr->getSilentMode())
 		cout << "] [ ";
-	while (i < this->getAttackCapacity() && alienArmyList->delete_first_or_last_drone(AD))
+	while (i < this->getAttackCapacity() && AD)
 	{
-		if (!game_ptr->getSilentMode())
-			cout << AD << " ";
-		AD->set_attacked_time(game_ptr->get_current_time());
-		AD->set_first_attack_delay();
-		AD->setHealth(AD->getHealth() - (this->Power * this->health / 100) / sqrt(AD->getHealth()));
-		if (AD->getHealth())
+		alienArmyList->deleteUnit(AD);
+		if (AD)
 		{
-			temp.enqueue(AD);
+			if (!game_ptr->getSilentMode())
+				cout << AD << " ";
+			AD->set_attacked_time(game_ptr->get_current_time());
+			AD->set_first_attack_delay();
+			AD->setHealth(AD->getHealth() - (this->Power * this->health / 100) / sqrt(AD->getHealth()));
+			if (AD->getHealth())
+			{
+				tempDrones.enqueue_first_last(AD);
+			}
+			else
+				this->game_ptr->add_to_killed_list(AD);
+			i++;
 		}
-		else
-			this->game_ptr->add_to_killed_list(AD);
-		i++;
 	}
 	if (!game_ptr->getSilentMode())
 		cout << "]\n";
 	while (temp.dequeue(tempPtr))
 		alienArmyList->addUnit(tempPtr);
-	delete A;
+	while (tempDrones.delete_first_or_last(tempPtr))
+		alienArmyList->addUnit(tempPtr);
+	delete A1;
+	delete A2;
 	if (i == 0)
 	{
 		return false;

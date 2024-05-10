@@ -3,9 +3,10 @@
 template<class T>
 class QUEUE : public LinkedQueue<T> 
 {
-	bool flag;
+	bool add_first_or_last_flag;
+	bool delete_first_or_last_flag;
 public:
-	QUEUE(): flag(true)
+	QUEUE(): add_first_or_last_flag(true), delete_first_or_last_flag(true)
 	{
 	}
 	bool enqueue_first(const T &entry)
@@ -26,15 +27,15 @@ public:
 	}
 	bool enqueue_first_last(const T& entry)
 	{
-		if (flag)
+		if (add_first_or_last_flag)
 		{
 			enqueue_first(entry);
-			flag=false;
+			add_first_or_last_flag =false;
 		}
 		else
 		{
 			this->enqueue(entry);
-			flag = true;
+			add_first_or_last_flag = true;
 		}
 		return true;
 	}
@@ -82,6 +83,27 @@ public:
 			element1 =this->frontPtr->get_item();
 			element2 = this->backPtr->get_item();
 			return true;
+		}
+	}
+	bool delete_first_or_last(T& element1)
+	{
+		if (this->delete_first_or_last_flag)
+		{
+			if (this->dequeue(element1))
+			{
+				delete_first_or_last_flag = false;
+				return true;
+			}
+				return false;
+		}
+		else
+		{
+			if (this->dequeue_last(element1))
+			{
+				delete_first_or_last_flag = true;
+				return true;
+			}
+				return false;
 		}
 	}
 

@@ -46,13 +46,13 @@ void AlienArmy::deleteUnit(armyUnit*& unit)
 	}
 	else if (Drones* d = dynamic_cast<Drones*>(unit))
 	{
-		if(queue_drones->dequeue(d))
+		if(queue_drones->delete_first_or_last(d))//delete a drone once from front and once from last
 		unit = d;
 		else unit = nullptr;
 	}
 	else
 	{
-		AllienSoldier* S = dynamic_cast<AllienSoldier*>(unit);
+		AllienSoldier* S = dynamic_cast<AllienSoldier*>(unit);//delete an alien soldier
 		if(allien_soldier->dequeue(S))
 		unit = S;
 		else unit = nullptr;
