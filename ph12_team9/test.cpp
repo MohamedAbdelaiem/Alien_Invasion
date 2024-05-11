@@ -2,10 +2,37 @@
 //
 
 #include <iostream>
+#include <string>
 #include"data_structure/Game.h"
 using namespace std;
+	void printWithDelay() 
+	{
+		string line = "";
+		ifstream file;
+		file.open("AlienInvasion.txt");
+		//// Set the console text color to bright green
+		std::cout << "\033[91m";
+		
+		// Print the header with a bold font
+		std::cout << "\033[1m";
+		
+
+		if (file.is_open())
+		{
+			while (getline(file, line))
+			{
+				cout << line << endl;
+				Sleep(100);
+			}
+		}
+		//// Reset console text color
+		std::cout << "\033[0m"; // Reset font style
+	}
 int main()
 {
+
+	printWithDelay();
+	//PlaySound(TEXT("WarEntrance.wav"), NULL, SND_FILENAME | SND_SYNC);
 	ifstream file;
 	string fileName;
 	string fileName_out;

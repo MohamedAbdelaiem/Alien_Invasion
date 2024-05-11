@@ -3,6 +3,9 @@
 #define GA_ME
 #include<iostream>
 #include<fstream>
+#include <Windows.h>
+#include<mmsystem.h>
+#pragma comment(lib, "Winmm.lib") 
 #include"AlienArmy.h"
 #include"EarthArmy.h"
 #include"Rand_Gen.h"

@@ -1,7 +1,6 @@
 using namespace std;
 #include<iostream>
 #include "Game.h"
-#include "time.h"
 #include <conio.h>
 #include<random>
 Game::Game(string fileName,bool silentMode,string outfile)//initializes the system
@@ -239,14 +238,20 @@ void Game::simulate()
             if (aliens->get_count() == 0 && humans->get_count() != 0)
             {
                 if (!getSilentMode())
+                {
                     cout << "Yeah!!Finally,We won!" << endl;
+                    PlaySound(TEXT("winning"), NULL, SND_FILENAME | SND_SYNC);
+                }
                 outfile << "\n Yeah!!Finally,We won!\n";
 
             }
             else if (aliens->get_count() != 0 && humans->get_count() == 0)
             {
                 if (!getSilentMode())
+                {
                     cout << "We lost !!!!!!!!!" << endl;
+                    PlaySound(TEXT("lose.wav"), NULL, SND_FILENAME | SND_SYNC);
+                }
                 outfile << "We lost !!!!!!!!!" << endl;
             }
             else if (aliens->get_count() == 0 && humans->get_count() == 0)
