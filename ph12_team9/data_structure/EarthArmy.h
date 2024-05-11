@@ -27,6 +27,7 @@ public:
 	virtual int getCountForES() ;//get the number of Earth Soldiers
 	bool peek_unit(armyUnit*& unit);
 	virtual int get_count();
+	int RandomInfection(int count);
 	
 	~EarthArmy();
 

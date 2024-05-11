@@ -29,6 +29,8 @@ bool Heal_Soldier::Attack()
 			uml->dequeue(unit,x);
 			if (game_ptr->get_current_time() - unit->get_time_UML() > 10)
 			{
+				if (unit->get_infection())
+					game_ptr->decrease_numOfInfectedSoldiersInUML();
 				unit->setHealth(0);
 				game_ptr->add_to_killed_list(unit);
 			}
@@ -47,6 +49,9 @@ bool Heal_Soldier::Attack()
 					if (unit->get_infection())	
 					{
 						unit->set_immunity(true);//gives the unit immunity to avoid be infected again
+						unit->set_infection(false);
+						game_ptr->decrease_numOfInfectedSoldiers();
+						game_ptr->decrease_numOfInfectedSoldiersInUML();
 					}
 					EarthPtr->addUnit(unit);
 					game_ptr->incr_numOfHealedUnits();

@@ -14,6 +14,7 @@ Game::Game(string fileName,bool silentMode,string outfile)//initializes the syst
 	current_time = 1;
     numOfHealedUnits = 0;
     numOfInfectedSoldiers = 0;
+    infected_in_uml = 0;
     loadFromInput(fileName);
     generate_output_file(outfile);
     
@@ -117,18 +118,20 @@ void Game::simulate()
                 cout << "The generation has reached the maximum number of ids for both earth and aliens" << endl;
             }
         }
-        
+        this->RandomIfection();
         if (!silentMode)
             this->print_lists();
-
-        check_draw = this->attack();
         if (!silentMode)
         {
             cout << "======================infected_units precntage==================\n";
             if (humans->getCountForES())
-                cout << "The precntage of infected soldiers is " << float(numOfInfectedSoldiers) / humans->getCountForES() << "\n";
+                cout << "The precntage of infected soldiers is " << float(numOfInfectedSoldiers) / (random_generator->getES_total() - killed_ES) * 100 << " %\n";
             else
-                cout << "The precntage of infected soldiers is " << "There isnot any earth soldier in the battle" << "\n";
+                cout << "The precntage of infected soldiers is " << "There isn't any earth soldier in the battle" << "\n";
+        }
+        check_draw = this->attack();
+        if (!silentMode)
+        {
             cout << "==================== UML ====================\n";
             cout << UML->getCount() << " Units ";
             UML->print_list();
@@ -364,6 +367,10 @@ bool Game::loadFromInput(string fileName)
             random_generator->A_Cap(x0, number);
 
         }
+        else if (i == 21)
+        {
+            random_generator->setInfectionProb(number);
+        }
 
         i++;
     }
@@ -385,6 +392,11 @@ void Game::add_to_killed_list(armyUnit* unit)
         E_Dd_total += unit->get_destruction_delay();
         E_Db_total += unit->get_battle_time();
         E_Df_total += unit->get_first_attack_delay();
+        if (unit->get_infection())
+        {
+            unit->set_infection(false);
+            decrease_numOfInfectedSoldiers();
+        }
         break;
     case(Tank): 
         killed_ET++;
@@ -430,13 +442,33 @@ void Game::add_to_killed_list(armyUnit* unit)
 
 void Game::add_to_UML(armyUnit* unit, int priority)
 {
-    if(unit)
-    UML->enqueue(unit, priority);
+    if (unit)
+    {
+        UML->enqueue(unit, priority);
+        if (unit->get_infection())
+            infected_in_uml++;
+    }
 }
 
-void Game::increase_numOfInfectedSoldiers()
+void Game::increase_numOfInfectedSoldiers(int x )
 {
-    numOfInfectedSoldiers++;
+    numOfInfectedSoldiers += x;
+}
+
+void Game::decrease_numOfInfectedSoldiers()
+{
+    numOfInfectedSoldiers--;
+}
+
+void Game::decrease_numOfInfectedSoldiersInUML()
+{
+    infected_in_uml--;
+}
+
+void Game::RandomIfection()
+{
+    int count = humans->RandomInfection(numOfInfectedSoldiers-infected_in_uml);
+    increase_numOfInfectedSoldiers(count);
 }
 
 

@@ -185,6 +185,38 @@ int EarthArmy::get_count()
 	return soldiers->get_count()+Gunneries->getCount()+ tanks->get_count();
 }
 
+int EarthArmy::RandomInfection(int count)  //random infect EarthSolddier 
+{
+	int infected_index, counter = 0;
+	earthSoldier* tempES;
+	LinkedQueue<earthSoldier*>tempQ;
+	for (int i = 0; i < count; i++)         //every infected EarthSoldier can infect another soldier
+	{
+		if ((rand() % 101) <= 2)             //prob of random infection
+		{
+			infected_index = rand() % soldiers->get_count();
+			for (int j = 0; j < soldiers->get_count(); j++)
+			{
+				soldiers->dequeue(tempES);
+				if (infected_index == i)
+				{
+					if (!tempES->get_immunity()&&!tempES->get_infection())
+					{
+						tempES->set_infection(true);
+						counter++;
+					}
+				}
+				tempQ.enqueue(tempES);
+			}
+			while (tempQ.dequeue(tempES))
+			{
+				soldiers->enqueue(tempES);
+			}
+		}
+	}
+	return counter;   //return number of new infected soldiers
+}
+
 
 
 EarthArmy::~EarthArmy()  //Destructor

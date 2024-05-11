@@ -40,6 +40,10 @@ void Rand_Gen::setHU(int x)
 {
     HU = x;
 }
+void Rand_Gen::setInfectionProb(int x)
+{
+    infection_prob = x;
+}
 void Rand_Gen::setProp(int x)
 {
     Prop = x;
@@ -188,7 +192,7 @@ armyUnit* Rand_Gen::generate_alien_unit(int join_time)//generate a random alien 
         else if (b <= AS + AM)
         {
             //generate monster
-            monsters* new_monster = new monsters(id_alien++, join_time, random_health, random_power, random_attack_capacity, monster, game_ptr);
+            monsters* new_monster = new monsters(id_alien++, join_time, random_health, random_power, random_attack_capacity, monster, game_ptr,infection_prob);
             AM_total++;
             return new_monster;
         }

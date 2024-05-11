@@ -5,9 +5,10 @@ using namespace std;
 
 monsters::monsters(int id):armyUnit(id)
 {
+	infection_prob = 0;
 }
 
-monsters::monsters(int id, int join_time, int Health, int power, int attackC, unitType type, Game* game) :armyUnit(id, join_time, Health, power, attackC,type,game)
+monsters::monsters(int id, int join_time, int Health, int power, int attackC, unitType type, Game* game,int infection) :armyUnit(id, join_time, Health, power, attackC,type,game),infection_prob(infection)
 {
 }
 
@@ -41,7 +42,7 @@ bool monsters::Attack()
 			}
 			else																//add to killed list
 			{
-				game_ptr->add_to_killed_list(ES);
+					game_ptr->add_to_killed_list(ES);
 			}	
 			i++;																//increasing the counter
 		}
@@ -90,6 +91,16 @@ bool monsters::Attack()
 	{
 		earthSoldier* ES1;
 		temp_list_soldiers.dequeue(ES1);
+		int infection = rand() % 101;
+		if (infection <= infection_prob) //pro of infect the soldier
+		{
+			if (!ES1->get_immunity() && !ES1->get_infection()) // if he isn't infected and doesn't have immunity infect it
+
+			{
+				ES1->set_infection(true);
+				game_ptr->increase_numOfInfectedSoldiers();
+			}
+		}
 		game_ptr->get_humans_pointer()->addUnit(ES1);
 	}
 	while (!temp_list_tank.isEmpty())    //return all tanks from its templist to its original list
