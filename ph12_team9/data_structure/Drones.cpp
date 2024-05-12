@@ -22,7 +22,7 @@ bool Drones::Attack()
 		if (EG) //checking for NULL 
 		{
 			EG->set_attacked_time(game_ptr->get_current_time());                    //->set the first attacked time
-			EG->setHealth(EG->getHealth() - ((Power * health) / 100) / float(sqrt(EG->getHealth())));  //->set the health of the attacked unit with the damage
+			EG->setHealth(EG->getHealth() - ((float(Power) * health) / 100) / float(sqrt(EG->getHealth())));  //->set the health of the attacked unit with the damage
 			EG->set_first_attack_delay();									//->set the first attack delay
 			print.enqueue(EG->getID());												//->add to print list
 		    if (EG->getHealth() > 0)                                       //->if he wasn't killed put it in temp list as a place holder
@@ -58,7 +58,7 @@ bool Drones::Attack()
 		if (t) //checking for NULL 
 		{
 			t->set_attacked_time(game_ptr->get_current_time());                    //->set the first attacked time
-			t->setHealth(t->getHealth() - ((Power * health) / 100) / float(sqrt(t->getHealth())));  //->set the health of the attacked unit with the damage
+			t->setHealth(t->getHealth() - ((float(Power) * health) / 100) / float(sqrt(t->getHealth())));  //->set the health of the attacked unit with the damage
 			t->set_first_attack_delay();														//->set the first attack delay
 			print.enqueue(t->getID());																	//->add to print list
 			if (float(t->getHealth()) / t->getOrigHealth() < 0.2 && t->getHealth() > 0)            //->check for inserting in UML list

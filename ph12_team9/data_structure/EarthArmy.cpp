@@ -70,7 +70,7 @@ void EarthArmy::deleteUnit(armyUnit*& unit)
 	}
 }
 
-void EarthArmy::print()
+void EarthArmy::print() const
 {
 
 	cout << soldiers->get_count() << " ES";         //print soldier list
@@ -131,7 +131,7 @@ int EarthArmy::getCountForES()
 	return this->soldiers->get_count();
 }
 
-bool EarthArmy::peek_unit(armyUnit*& unit)
+bool EarthArmy::peek_unit(armyUnit*& unit) const
 {
 	if (Gunnery* g = (dynamic_cast<Gunnery*>(unit)))
 	{
@@ -180,7 +180,7 @@ bool EarthArmy::peek_unit(armyUnit*& unit)
 	}
 }
 
-int EarthArmy::get_count()
+int EarthArmy::get_count() const
 {
 	return soldiers->get_count()+Gunneries->getCount()+ tanks->get_count();
 }
@@ -225,23 +225,23 @@ EarthArmy::~EarthArmy()  //Destructor
 	earthSoldier* es;
 	while (soldiers->dequeue(es))
 	{
-		if(es) delete es;
+		if(es) delete es;   //--> destroy all earth soldiers
 	}
 	Gunnery* eg;
 	int i;
 	while (Gunneries->dequeue(eg,i))
 	{
-		if (eg) delete eg;
+		if (eg) delete eg;		//--> destroy all earth gunneries
 	}
 	Heal_Soldier* HU;
 	while (HL->pop(HU))
 	{
-		if (HU) delete HU;
+		if (HU) delete HU;   //--> destroy all heal units
 	}
 	tank* et;
 	while (tanks->pop(et))
 	{
-		if (et) delete et;
+		if (et) delete et;        //--> destroy all earth tanks
 	}
 	delete soldiers;
 	soldiers = nullptr;

@@ -9,6 +9,7 @@ Game::Game(string fileName,bool silentMode,string outfile)//initializes the syst
 	killed_list = new LinkedQueue<armyUnit*>;
 	aliens = new AlienArmy;
 	humans = new EarthArmy;
+    allyArmy = new AllyArmy(this);
 	random_generator = new Rand_Gen(this);
     UML = new priQueue<armyUnit*>;
 	current_time = 1;
@@ -17,22 +18,33 @@ Game::Game(string fileName,bool silentMode,string outfile)//initializes the syst
     infected_in_uml = 0;
     loadFromInput(fileName);
     generate_output_file(outfile);
+    SU_Helping = false;
     
-    killed_ES = 0, killed_ET = 0, killed_EG = 0, killed_AS = 0, killed_AD = 0, killed_AM = 0, killed_HU = 0, E_Df_total = 0, E_Dd_total = 0, E_Db_total = 0, A_Df_total = 0, A_Dd_total = 0, A_Db_total = 0;
+    killed_ES = 0, killed_ET = 0, killed_EG = 0, killed_AS = 0, killed_AD = 0, killed_AM = 0, killed_HU = 0,killed_SU = 0, E_Df_total = 0, E_Dd_total = 0, E_Db_total = 0, A_Df_total = 0, A_Dd_total = 0, A_Db_total = 0;
 }
 
 bool Game::attack()
 {
     if(!this->silentMode)
     cout << "==================== Units fighting at current step ====================\n";
-    return(humans->attack() | aliens->attack());
+    bool humansAttack = humans->attack();      //--> make the earth army attack the alien army
+    bool allyAttack = false;
+    if (SU_Helping)
+    {
+        allyAttack = allyArmy->attack();     //--> make the ally army attack the alien army if the earth need to healp
+    }
+    bool aliensAttack = aliens->attack();   //--> make the alien army attack the earth army
+    return(humansAttack || aliensAttack || allyAttack);    //--> return true if any of the armies attack successfully
 }
 
-void Game::print_lists()//print all lists
+void Game::print_lists() const//print all lists
 {
     cout << "Current Timestep " << this->current_time << endl;
     cout << "==================== Earth Army Alive Units ====================\n";
 	humans->print();
+	cout << endl << endl;
+    cout << "==================== Ally Army Alive Units ====================\n";
+    allyArmy->print();
 	cout << endl << endl;
     cout << "==================== Allien Army Alive Units ====================\n";
 	aliens->print();
@@ -68,7 +80,17 @@ void Game::generate()//generate alien and earth units
           
         }
     }
-   
+    if (SU_Helping)
+    {
+
+            for (int j = 0; j < numGen_SU; j++)
+            {
+                saverUnit* b = random_generator->generate_SU(current_time);
+                if (b)
+                    allyArmy->addUnit(b);
+
+            }
+    }
 }
 
 void Game::increament_time()
@@ -91,12 +113,12 @@ void Game::incr_numOfHealedUnits()
     this->numOfHealedUnits++;
 }
 
-int Game::get_numOfHealedUnits()
+int Game::get_numOfHealedUnits() const
 {
     return this->numOfHealedUnits;
 }
 
-bool Game::getSilentMode()
+bool Game::getSilentMode() const
 {
     return this->silentMode;
 }
@@ -121,6 +143,7 @@ void Game::simulate()
         this->RandomIfection();
         if (!silentMode)
             this->print_lists();
+        check_draw = this->attack();
         if (!silentMode)
         {
             cout << "======================infected_units precntage==================\n";
@@ -129,7 +152,8 @@ void Game::simulate()
             else
                 cout << "The precntage of infected soldiers is " << "There isn't any earth soldier in the battle" << "\n";
         }
-        check_draw = this->attack();
+
+        this->checkSuHelping();   //--> check if the Earth Army need to help or not
         if (!silentMode)
         {
             cout << "==================== UML ====================\n";
@@ -371,7 +395,38 @@ bool Game::loadFromInput(string fileName)
         {
             random_generator->setInfectionProb(number);
         }
-
+        else if (i == 22)
+        {
+            this->treshold= number;
+        }
+        else if (i == 23)
+        {
+            numGen_SU = number;
+        }
+        else if (i == 24)
+        {
+            int x0 = number;
+            file >> number;
+            if (number < 0) number = abs(number);
+            i++;
+            random_generator->SU_pow(x0, number);
+        }
+        else if (i == 26)
+        {
+            int x0 = number;
+            file >> number;
+            if (number < 0) number = abs(number);
+            i++;
+            random_generator->SU_Health(x0, number);
+        }
+        else if (i == 28)
+        {
+            int x0 = number;
+            file >> number;
+            if (number < 0) number = abs(number);
+            i++;
+            random_generator->SU_cap(x0, number);
+        }
         i++;
     }
     file.close();
@@ -434,6 +489,12 @@ void Game::add_to_killed_list(armyUnit* unit)
         A_Db_total += unit->get_battle_time();
         A_Df_total += unit->get_first_attack_delay();
         break;
+    case(saver_unit):
+        killed_SU++;
+        A_Dd_total += unit->get_destruction_delay();
+        A_Db_total += unit->get_battle_time();
+        A_Df_total += unit->get_first_attack_delay();
+        break;
     default:
         break;
     }
@@ -444,9 +505,9 @@ void Game::add_to_UML(armyUnit* unit, int priority)
 {
     if (unit)
     {
-        UML->enqueue(unit, priority);
+        UML->enqueue(unit, priority);     //--> add a unit to UML
         if (unit->get_infection())
-            infected_in_uml++;
+            infected_in_uml++;       //--> increase number of infected soldiers if the unit was infected
     }
 }
 
@@ -473,19 +534,34 @@ void Game::RandomIfection()
 
 
 
-priQueue<armyUnit*>* Game::get_UML()
+priQueue<armyUnit*>* Game::get_UML() const
 {
     return this->UML;
 }
 
-AlienArmy* Game::get_aliens_pointer()
+AlienArmy* Game::get_aliens_pointer() const
 {
     return aliens;
 }
 
-EarthArmy* Game::get_humans_pointer()
+EarthArmy* Game::get_humans_pointer() const
 {
     return humans;
+}
+
+AllyArmy* Game::get_Ally_pointer() const
+{
+    return allyArmy;
+}
+
+bool Game::EarthArmy_Need_TO_Help() const
+{
+    //int total_alive_earthArmy_units = humans->get_count() + UML->getCount();
+
+    int total_alive_earthArmy_units = (random_generator->getES_total() - killed_ES);    //--> total earth soldiers
+    int total_infected_units = this->numOfInfectedSoldiers;    //--> total infected soldiers
+    return (total_alive_earthArmy_units!=0 && (total_infected_units / float(total_alive_earthArmy_units)*100 >= treshold));   //--> if the percentage of the infected to all soldiers reaches the treshold return treu
+
 }
 
 void Game::generate_output_file(string filename)
@@ -530,6 +606,22 @@ bool Game::check_winner(bool draw )
     return false;
 }
 
+void Game::checkSuHelping()
+{
+    if (EarthArmy_Need_TO_Help())        //--> if the earth army need to help
+    {
+         SU_Helping = true;            
+    }
+    else if (numOfInfectedSoldiers == 0)     //--> if we reached zero in number of infected soldiers
+    {
+        if (SU_Helping)          //--> check if the SU was helping before then destroy all the SUs if true
+        {
+            allyArmy->destroyAll();
+            SU_Helping = false;
+        }
+    }
+}
+
 
 Game::~Game()
 {
@@ -538,7 +630,7 @@ Game::~Game()
     while (killed_list->dequeue(aa)) if (aa) delete aa;
     while (UML->dequeue(aa,i))  if (aa)delete aa;
 
-	delete aliens, humans, random_generator,killed_list,UML;
+	delete aliens, humans, random_generator, killed_list, UML, allyArmy;
 }
 
 

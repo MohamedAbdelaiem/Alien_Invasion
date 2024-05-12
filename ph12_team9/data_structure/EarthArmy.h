@@ -20,13 +20,13 @@ private:
 	
 public:
 	EarthArmy();
-	virtual void addUnit(armyUnit* unit) ;
-	virtual void deleteUnit(armyUnit*& unit) ;
-	virtual void print() ;
-	virtual bool attack() ;
-	virtual int getCountForES() ;//get the number of Earth Soldiers
-	bool peek_unit(armyUnit*& unit);
-	virtual int get_count();
+	virtual void addUnit(armyUnit* unit) ;  //--> add a unit to its appropriate list
+	virtual void deleteUnit(armyUnit*& unit) ;  //--> delete a unit
+	virtual void print() const ;   //--> print all earth army lists
+	virtual bool attack() ;  //--> make all  earth army units attack 
+	virtual int getCountForES() ;  //-->get the number of Earth Soldiers
+	bool peek_unit(armyUnit*& unit) const;     //--> peek a unit from its list
+	virtual int get_count() const;
 	int RandomInfection(int count);
 	
 	~EarthArmy();

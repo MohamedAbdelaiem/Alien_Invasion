@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="data_structure\AlienArmy.cpp" />
     <ClCompile Include="data_structure\AllienSoldier.cpp" />
+    <ClCompile Include="data_structure\Ally_Army.cpp" />
     <ClCompile Include="data_structure\armyUnit.cpp" />
     <ClCompile Include="data_structure\Drones.cpp" />
     <ClCompile Include="data_structure\EarthArmy.cpp" />
@@ -138,12 +139,14 @@
     <ClCompile Include="data_structure\Heal_Soldier.cpp" />
     <ClCompile Include="data_structure\monster.cpp" />
     <ClCompile Include="data_structure\Rand_Gen.cpp" />
+    <ClCompile Include="data_structure\saverUnit.cpp" />
     <ClCompile Include="data_structure\tank.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="data_structure\AlienArmy.h" />
     <ClInclude Include="data_structure\AllienSoldier.h" />
+    <ClInclude Include="data_structure\Ally_Army.h" />
     <ClInclude Include="data_structure\Army.h" />
     <ClInclude Include="data_structure\armyUnit.h" />
     <ClInclude Include="data_structure\Array.h" />
@@ -163,6 +166,7 @@
     <ClInclude Include="data_structure\QUEUE.h" />
     <ClInclude Include="data_structure\QueueADT.h" />
     <ClInclude Include="data_structure\Rand_Gen.h" />
+    <ClInclude Include="data_structure\saverUnit.h" />
     <ClInclude Include="data_structure\StackADT.h" />
     <ClInclude Include="data_structure\tank.h" />
   </ItemGroup>

@@ -60,7 +60,7 @@ void AlienArmy::deleteUnit(armyUnit*& unit)
 
 }
 
-void AlienArmy::print()
+void AlienArmy::print() const
 {
 	cout << allien_soldier->get_count() << " AS ";
 	allien_soldier->print_list();
@@ -111,7 +111,7 @@ bool AlienArmy::attack()
 	return(flag1 || flag2 || flag3 || flag4);
 
 }
-int AlienArmy::getCountForAS()
+int AlienArmy::getCountForAS() const
 {
 	return this->allien_soldier->get_count();
 }
@@ -172,7 +172,7 @@ bool AlienArmy::peek_two_drones(armyUnit*& drone1, armyUnit*& drone2)
 	}
 }
 
-bool AlienArmy::peek_unit(armyUnit*& unit)
+bool AlienArmy::peek_unit(armyUnit*& unit) const
 {
 	if (monsters* m = (dynamic_cast<monsters*>(unit)))
 	{
@@ -213,7 +213,7 @@ bool AlienArmy::peek_unit(armyUnit*& unit)
 	return true;
 }
 
-int AlienArmy::get_count()
+int AlienArmy::get_count() const
 {
 	return array_monsters->get_count()+queue_drones->get_count()+allien_soldier->get_count();
 }

@@ -78,6 +78,21 @@ void Rand_Gen::A_Health(int x0, int x1)
     A_Health0 = x0;
     A_Health1 = x1;
 }
+void Rand_Gen::SU_Health(int x0, int x1)
+{
+    this->SU_Health0 = x0;
+    this->SU_Health1 = x1;
+}
+void Rand_Gen::SU_pow(int x0, int x1)
+{
+    this->SU_pow0 = x0;
+    this->SU_pow1 = x1;
+}
+void Rand_Gen::SU_cap(int x0, int x1)
+{
+    this->SU_cap0 = x0;
+    this->SU_cap1 = x1;
+}
 int Rand_Gen::get_E_Pow0()
 {
     return E_Pow0;
@@ -204,6 +219,20 @@ armyUnit* Rand_Gen::generate_alien_unit(int join_time)//generate a random alien 
             return new_drone;
         }
         
+    }
+    return nullptr;
+}
+
+saverUnit* Rand_Gen::generate_SU(int join_time)
+{
+    if (id_earth != 1000)
+    {
+        int random_power = (rand() % (SU_pow1 - SU_pow0 + 1) + SU_pow0);     //--> random power
+        int random_health = (rand() % (SU_Health1 - SU_Health0 + 1) + SU_Health0);  //--> random health
+        int random_attack_capacity = (rand() % (SU_cap1 - SU_cap0 + 1) + SU_cap0);  //--> ramdom capacity
+
+        saverUnit* su = new saverUnit(id_earth++, join_time, random_health, random_power, random_attack_capacity, saver_unit, this->game_ptr);   //--> generate SU
+        return su;
     }
     return nullptr;
 }

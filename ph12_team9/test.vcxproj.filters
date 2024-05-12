@@ -63,10 +63,16 @@
     <ClCompile Include="data_structure\earthSoldier.cpp">
       <Filter>Units</Filter>
     </ClCompile>
-    <ClCompile Include="data_structure\tank.cpp">
+    <ClCompile Include="data_structure\Heal_Soldier.cpp">
       <Filter>Units</Filter>
     </ClCompile>
-    <ClCompile Include="data_structure\Heal_Soldier.cpp">
+    <ClCompile Include="data_structure\Ally_Army.cpp">
+      <Filter>Armies</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\saverUnit.cpp">
+      <Filter>Units</Filter>
+    </ClCompile>
+    <ClCompile Include="data_structure\tank.cpp">
       <Filter>Units</Filter>
     </ClCompile>
   </ItemGroup>
@@ -138,6 +144,12 @@
       <Filter>Units</Filter>
     </ClInclude>
     <ClInclude Include="data_structure\Heal_Soldier.h">
+      <Filter>Units</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\Ally_Army.h">
+      <Filter>Armies</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure\saverUnit.h">
       <Filter>Units</Filter>
     </ClInclude>
   </ItemGroup>

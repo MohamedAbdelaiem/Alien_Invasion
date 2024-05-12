@@ -8,7 +8,7 @@ class earthSoldier :public armyUnit
 public:
 	earthSoldier(int id=0 );
 	earthSoldier(int id, int join_time, int Health, int power, int attackC, unitType type, Game* game);
-	virtual bool Attack();
+	virtual bool Attack();  //--> make the earth soldier attack
 
 };
 
