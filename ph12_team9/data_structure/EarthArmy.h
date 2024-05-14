@@ -28,7 +28,6 @@ public:
 	bool peek_unit(armyUnit*& unit) const;     //--> peek a unit from its list
 	virtual int get_count() const;
 	int RandomInfection(int count);
-	int getcount_tanks();
 	~EarthArmy();
 
 };
