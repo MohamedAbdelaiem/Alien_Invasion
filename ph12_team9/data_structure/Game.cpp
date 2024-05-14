@@ -146,6 +146,7 @@ void Game::simulate()
         check_draw = this->attack();
         
         this->checkSuHelping();   //--> check if the Earth Army need to help or not
+
         if (!silentMode)
         {
             cout << "==================== UML ====================\n\n";
@@ -180,7 +181,10 @@ void Game::simulate()
         if (check_winner(check_draw))
         {
             if (aliens->get_count() != 0 && humans->get_count() == 0)
+            {
                 this->kill_UML();
+                this->checkSuHelping();
+            }
             outfile << "//////////////////////////////////////////////////Earth Army////////////////////////////////////////////////////" << endl;
             outfile << "Total Earth soldier: " << random_generator->getES_total() << endl;
             outfile << "Total Earth tank: " << random_generator->getET_total() << endl;
@@ -243,7 +247,7 @@ void Game::simulate()
             outfile << "Total destructed Saver Units: " << killed_SU << endl;
             if (random_generator->getSU_total())
             {
-                outfile << "percentage destructed Earth Saver Units: " << float(killed_SU) / random_generator->getSU_total()*100 << endl;;
+                outfile << "percentage destructed Earth Saver Units: " << float(killed_SU) / random_generator->getSU_total() * 100 << "%" << endl;
             }
             else  outfile << "percentage destructed Earth Saver Units: There are not any SU have been generated"<<endl;
 

@@ -226,6 +226,11 @@ int EarthArmy::RandomInfection(int count)  //random infect EarthSolddier
 	return counter;   //return number of new infected soldiers
 }
 
+int EarthArmy::getcount_tanks()
+{
+	return tanks->get_count();
+}
+
 
 EarthArmy::~EarthArmy()  //Destructor
 {
