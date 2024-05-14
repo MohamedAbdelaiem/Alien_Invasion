@@ -22,8 +22,8 @@ private:
 	Rand_Gen*random_generator;
 	ofstream outfile;
 	int current_time;
-	int N, Prop,killed_ES, killed_ET, killed_EG, killed_AS, killed_AD, killed_AM, killed_HU,killed_SU,E_Df_total, E_Dd_total, E_Db_total,  A_Df_total, A_Dd_total, A_Db_total;
-	int numOfHealedUnits,numOfInfectedSoldiers, infected_in_uml;
+	int N, Prop,killed_ES, killed_ET, killed_EG, killed_AS, killed_AD, killed_AM, killed_HU,killed_SU,E_Df_total, E_Dd_total, E_Db_total,  A_Df_total, A_Dd_total, A_Db_total,total_infected_soldiers;
+	int numOfHealedUnits,numOfInfectedSoldiers, infected_in_uml, S_Dd_total, S_Db_total, S_Df_total;
 	bool silentMode;
 	int treshold;
 	int numGen_SU;
@@ -57,6 +57,7 @@ public:
 	void add_to_file(armyUnit* unit);
 	bool check_winner(bool flag=true);
 	void checkSuHelping();    //--> chaeck if the Earth Army need to help and edit the boolen (SU_Healping) 
+	void increase_total_number_of_infected(int count);
 	~Game();
 
 

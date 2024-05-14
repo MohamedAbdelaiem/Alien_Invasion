@@ -26,7 +26,7 @@ bool monsters::Attack()
 		cout << "AM " << ID << " shots [ ";
 	// Attacking SU
 	armyUnit* SU = new saverUnit;
-	armyUnit* S = SU;
+	armyUnit* E = SU;
 	while (i < attackCapacity / 4 && SU)
 	{
 		game_ptr->get_Ally_pointer()->deleteUnit(SU);                             //->delete a unit from its list to attack it
@@ -48,14 +48,14 @@ bool monsters::Attack()
 			i++;																//increasing the counter
 		}
 	}
-	delete S;
+	delete E;
 	if (!game_ptr->getSilentMode())
 		cout << "] [ ";
 
 
 	//Attacking ES
 	armyUnit* ES = new earthSoldier; //// allocate an ES to do dynamic_cast
-	armyUnit* E = ES;
+	 E = ES;
 	while ( i < attackCapacity / 2)
 	{
 		game_ptr->get_humans_pointer()->deleteUnit(ES);                             //->delete a unit from its list to attack it
@@ -136,6 +136,7 @@ bool monsters::Attack()
 			{
 				ES1->set_infection(true);
 				game_ptr->increase_numOfInfectedSoldiers();
+				game_ptr->increase_total_number_of_infected(1);
 			}
 		}
 		game_ptr->get_humans_pointer()->addUnit(ES1);

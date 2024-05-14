@@ -19,8 +19,8 @@ Game::Game(string fileName,bool silentMode,string outfile)//initializes the syst
     loadFromInput(fileName);
     generate_output_file(outfile);
     SU_Helping = false;
-    
-    killed_ES = 0, killed_ET = 0, killed_EG = 0, killed_AS = 0, killed_AD = 0, killed_AM = 0, killed_HU = 0,killed_SU = 0, E_Df_total = 0, E_Dd_total = 0, E_Db_total = 0, A_Df_total = 0, A_Dd_total = 0, A_Db_total = 0;
+    srand(time(0));
+    killed_ES = 0, killed_ET = 0, killed_EG = 0, killed_AS = 0, killed_AD = 0, killed_AM = 0, killed_HU = 0,killed_SU = 0, E_Df_total = 0, E_Dd_total = 0, E_Db_total = 0, A_Df_total = 0, A_Dd_total = 0, A_Db_total = 0, total_infected_soldiers=0, S_Dd_total=0, S_Db_total=0, S_Df_total=0;
 }
 
 bool Game::attack()
@@ -55,7 +55,7 @@ void Game::print_lists() const//print all lists
 void Game::generate()//generate alien and earth units
 {
     
-    srand(time(0));
+    
     int a = rand() % 100 + 1;
     if (a <= Prop)
     {
@@ -77,7 +77,6 @@ void Game::generate()//generate alien and earth units
            armyUnit*b= random_generator->generate_alien_unit(current_time);
            if (b)
                aliens->addUnit(b);
-          
         }
     }
     if (SU_Helping)
@@ -129,41 +128,54 @@ void Game::simulate()
     while (true)
     {
         bool check_draw = false;
-        if (random_generator->id_earth_total() != 1000 || random_generator->id_alien_total() != 3000)
+        if (random_generator->id_earth_total() != 1000 || random_generator->id_alien_total() != 3000||random_generator->id_ally_total()!=4250)
         {
             this->generate();
         }
-        if (random_generator->id_earth_total() == 1000 && random_generator->id_alien_total() == 3000)
+        if (random_generator->id_earth_total() == 1000 && random_generator->id_alien_total() == 3000&&random_generator->id_ally_total() == 4250)
         {
             if (!silentMode)
             {
-                cout << "The generation has reached the maximum number of ids for both earth and aliens" << endl;
+                cout << "The generation has reached the maximum number of ids for  earth , aliens and ally armies" << endl;
             }
         }
         this->RandomIfection();
         if (!silentMode)
             this->print_lists();
+        
         check_draw = this->attack();
-        if (!silentMode)
-        {
-            cout << "======================infected_units precntage==================\n";
-            if (humans->getCountForES())
-                cout << "The precntage of infected soldiers is " << float(numOfInfectedSoldiers) / (random_generator->getES_total() - killed_ES) * 100 << " %\n";
-            else
-                cout << "The precntage of infected soldiers is " << "There isn't any earth soldier in the battle" << "\n";
-        }
-
+        
         this->checkSuHelping();   //--> check if the Earth Army need to help or not
         if (!silentMode)
         {
-            cout << "==================== UML ====================\n";
+            cout << "==================== UML ====================\n\n";
             cout << UML->getCount() << " Units ";
             UML->print_list();
-            cout << "==================== Killed / Distructed List ====================\n";
+            cout << "==================== Killed / Distructed List ====================\n\n";
             cout << killed_list->get_count() << " Units ";
             killed_list->print_list();
-            cout << "***********\t\tpress enter to move to the next step\t\t******************\n\n\n";
-            while (_getch() != 13) {};
+            
+            
+        }
+        if (!silentMode)
+        {
+            cout << "======================infected_units precntage after attack==================\n";
+            cout << "Number of infected soldiers is: " << numOfInfectedSoldiers << endl;
+            if (random_generator->getES_total() - killed_ES != 0)
+                cout << "The precntage of infected soldiers is " << float(numOfInfectedSoldiers) / (random_generator->getES_total() - killed_ES) * 100 << " %\n";
+            else
+                cout << "The precntage of infected soldiers is " << "There isn't any earth soldier in the battle" << "\n\n\n";
+            cout << "***********\t\tpress enter to move to the next step or s to switch to silent mode directly \t\t***********\n\n\n";
+            char c = _getch();
+            while (c != 13)
+            {
+                if (tolower(c) == 's')
+                {
+                    silentMode = true;
+                    break;
+                }
+                c= _getch();
+            };
         }
         if (check_winner(check_draw))
         {
@@ -173,8 +185,14 @@ void Game::simulate()
             outfile << "Total Earth gunnery: " << random_generator->getEG_total() << endl;
             outfile << "Total Earth HealUnits: " << random_generator->getHU_total() << endl;
             outfile << "Total Earth Healed Units: " << get_numOfHealedUnits() << endl;
+            outfile << "Total Infected Earth Soldiers: " << numOfInfectedSoldiers << endl;
+            outfile << "Total Units Still in The UML is: " << UML->getCount() << endl;
             if (random_generator->getES_total() != 0)
                 outfile << "percentage destructed Earth soldier: " << ((float)killed_ES / (random_generator->getES_total())) * 100 << "%" << endl;
+            else
+                outfile << "percentage destructed Earth soldier: " << "there is no Earth soldiers generated" << endl;
+            if (random_generator->getES_total() != 0)
+                outfile << "percentage Infected Earth soldier: " << ((float)numOfInfectedSoldiers / (random_generator->getES_total())) * 100 << "%" << endl;
             else
                 outfile << "percentage destructed Earth soldier: " << "there is no Earth soldiers generated" << endl;
             if (random_generator->getET_total() != 0)
@@ -198,15 +216,15 @@ void Game::simulate()
             else
                 outfile << "percentage destructed Earth Army :" << "there is no Earth unit  generated" << endl;
             if (random_generator->getES_total() + random_generator->getEG_total() + random_generator->getHU_total() + random_generator->getET_total() != 0)
-                outfile << "Average of Df = " << (float)E_Df_total / (random_generator->getES_total() + random_generator->getET_total() + random_generator->getEG_total() + random_generator->getHU_total()) << "\n";
+                outfile << "Average of Df = " << (float)E_Df_total / (killed_ES + killed_ET + killed_EG + killed_HU) << "\n";
             else
                 outfile << "Average of Df = " << "there is no Earth unit  generated" << endl;
             if (killed_ES + killed_ET + killed_EG + killed_HU != 0)
-                outfile << "Average of Dd = " << E_Dd_total / (killed_ES + killed_ET + killed_EG + killed_HU) << "\n";
+                outfile << "Average of Dd = " << (float)E_Dd_total / (killed_ES + killed_ET + killed_EG + killed_HU) << "\n";
             else
                 outfile << "Average of Dd = " << "there is no Earth unit have been destructed" << endl;
             if (killed_ES + killed_ET + killed_EG + killed_HU != 0)
-                outfile << "Average of Db = " << E_Db_total / (killed_ES + killed_ET + killed_EG + killed_HU) << "\n";
+                outfile << "Average of Db = " << (float)E_Db_total / (killed_ES + killed_ET + killed_EG + killed_HU) << "\n";
             else
                 outfile << "Average of Db = " << "there is no Earth unit have been destructed" << endl;
             if (E_Db_total != 0)
@@ -216,7 +234,37 @@ void Game::simulate()
             if (E_Db_total != 0)
                 outfile << "Dd/Db = " << (float)E_Dd_total / E_Db_total * 100 << "%\n";
             else
-                outfile << "Dd/Db = " << "there is no Earth unit have been destructed" << endl;
+                outfile << "Dd/Db = " << "there is no Earth unit have been destructed" << endl<<endl;
+            outfile<<"//////////////////////////////////////////////////Ally Army////////////////////////////////////////////////////" << endl;
+
+            outfile << "Total Saver Units :" << random_generator->getSU_total() << endl;
+            outfile << "Total destructed Saver Units: " << killed_SU << endl;
+            if (random_generator->getSU_total())
+            {
+                outfile << "percentage destructed Earth Saver Units: " << float(killed_SU) / random_generator->getSU_total()*100 << endl;;
+            }
+            else  outfile << "percentage destructed Earth Saver Units: There are not any SU have been generated"<<endl;
+
+            if (killed_SU != 0)
+                outfile << "Average of Df = " << (float)S_Df_total / (killed_SU) << "\n";
+            else
+                outfile << "Average of Df = " << "there is no Saver unit  generated" << endl;
+            if (killed_SU != 0)
+                outfile << "Average of Dd = " << (float)S_Dd_total / (killed_SU) << "\n";
+            else
+                outfile << "Average of Dd = " << "there is no Saver unit have been destructed" << endl;
+            if (killed_SU != 0)
+                outfile << "Average of Db = " << (float)S_Db_total / (killed_SU) << "\n";
+            else
+                outfile << "Average of Db = " << "there is no Saver unit have been destructed" << endl;
+            if (S_Db_total != 0)
+                outfile << "Df/Db = " << (float)S_Df_total / S_Db_total * 100 << "%\n";
+            else
+                outfile << "Df/Db = " << "there is no Saver unit have been destructed" << endl;
+            if (S_Db_total != 0)
+                outfile << "Dd/Db = " << (float)S_Dd_total / S_Db_total * 100 << "%\n";
+            else
+                outfile << "Dd/Db = " << "there is no Saver unit have been destructed" << endl<<endl;
             outfile << "//////////////////////////////////////////////////Alien Army////////////////////////////////////////////////////" << endl;
             outfile << "Total Alien soldiers: " << random_generator->getAS_total() << endl;
             outfile << "Total Alien monsters: " << random_generator->getAM_total() << endl;
@@ -262,6 +310,8 @@ void Game::simulate()
                 cout << "SilentMode:" << endl;
                 cout << "the output file has been generated" << endl;
             }
+            outfile << "//////////////////////////////////////////////////Battle informations////////////////////////////////////////////////////" << endl;
+
             if (aliens->get_count() == 0 && humans->get_count() != 0)
             {
                 if (!getSilentMode())
@@ -293,11 +343,12 @@ void Game::simulate()
                     cout << " The fight ended with Draw" << endl;
                 outfile << "The fight has been ended with Draw" << endl;
             }
-            if (random_generator->id_earth_total() == 1000 && random_generator->id_alien_total() == 3000)
+            outfile << "Final Time Step :" << current_time << endl;
+            if (random_generator->id_earth_total() == 1000 && random_generator->id_alien_total() == 3000 && random_generator->id_ally_total() == 4250)
             {
                 if (silentMode)
                 {
-                    outfile << "The generation has reached the maximum number of ids for both earth and aliens" << endl;
+                    outfile << "The generation has reached the maximum number of ids for  earth , aliens and ally armies" << endl;
                 }
             }
             break;
@@ -449,7 +500,6 @@ void Game::add_to_killed_list(armyUnit* unit)
         E_Df_total += unit->get_first_attack_delay();
         if (unit->get_infection())
         {
-            unit->set_infection(false);
             decrease_numOfInfectedSoldiers();
         }
         break;
@@ -491,9 +541,9 @@ void Game::add_to_killed_list(armyUnit* unit)
         break;
     case(saver_unit):
         killed_SU++;
-        A_Dd_total += unit->get_destruction_delay();
-        A_Db_total += unit->get_battle_time();
-        A_Df_total += unit->get_first_attack_delay();
+        S_Dd_total += unit->get_destruction_delay();
+        S_Db_total += unit->get_battle_time();
+        S_Df_total += unit->get_first_attack_delay();
         break;
     default:
         break;
@@ -530,6 +580,7 @@ void Game::RandomIfection()
 {
     int count = humans->RandomInfection(numOfInfectedSoldiers-infected_in_uml);
     increase_numOfInfectedSoldiers(count);
+    increase_total_number_of_infected(count);
 }
 
 
@@ -620,6 +671,11 @@ void Game::checkSuHelping()
             SU_Helping = false;
         }
     }
+}
+
+void Game::increase_total_number_of_infected(int count)
+{
+    total_infected_soldiers += count;
 }
 
 

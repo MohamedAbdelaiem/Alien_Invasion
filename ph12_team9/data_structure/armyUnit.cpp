@@ -176,10 +176,25 @@ bool armyUnit::get_immunity()const
 ostream& operator<<(ostream& os,   armyUnit* ptr)
 {
     
-    if(ptr->get_infection())
-        os << "*" << ptr->getID()<<"*";
-    else
+    if (ptr->get_infection())
+    {
+        std::cout << "\033[91m";
+        os << "*" << ptr->getID() << "*";
+        std::cout << "\033[0m";
+    }
+    else if (ptr->get_immunity())
+    {
+        std::cout << "\033[92;1m"; // Set text color to green
         os << ptr->getID();
+        std::cout << "\033[0m";
+    }
+    else if (ptr->getUnitType() == saver_unit)
+    {
+        std::cout << "\033[94m"; // Set text color to light blue
+        os << ptr->getID();
+        std::cout << "\033[0m";
+    }
+    else    os << ptr->getID();
     if (ptr->get_immunity())
         ptr->set_infection(false);
     return os;

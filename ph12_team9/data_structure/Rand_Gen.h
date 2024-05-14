@@ -8,7 +8,7 @@ class Rand_Gen
 {
 private:
 	Game* game_ptr;
-	int id_earth,id_alien;
+	int id_earth,id_alien,id_ally;
 	int N, ES, ET, EG, AS, AD, AM,HU,Prop;
 	int E_Cap0, E_Cap1, E_Pow0, E_Pow1, E_Health0, E_Health1;
 	int A_Cap0, A_Cap1, A_Pow0, A_Pow1, A_Health0, A_Health1;
@@ -20,7 +20,7 @@ private:
 	int ET_total;
 	int EG_total;
 	int HU_total;
-
+	int SU_total;
 	// for SU 
 	int SU_cap0,SU_cap1,SU_pow0,SU_pow1,SU_Health0,SU_Health1;
 
@@ -55,8 +55,10 @@ public:
 	int getET_total();
 	int getEG_total();
 	int getHU_total();
+	int getSU_total();
 	int id_earth_total();
 	int id_alien_total();
+	int id_ally_total();
 	armyUnit* generate_earth_unit(int join_time); //--> generate an earth unit
 	armyUnit* generate_alien_unit(int join_time); //--> generate an alien unit
 	saverUnit* generate_SU(int join_time);  //--> generate a saver unit

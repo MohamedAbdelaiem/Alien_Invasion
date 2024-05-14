@@ -6,7 +6,8 @@ Rand_Gen::Rand_Gen(Game* game):game_ptr(game)
 {
 	id_earth = 1;
 	id_alien = 2000;
-    ES_total = ET_total = EG_total = HU_total = AS_total = AM_total = AD_total = 0;
+    id_ally = 4000;
+    ES_total = ET_total = EG_total = HU_total = AS_total = AM_total = AD_total =SU_total= 0;
 }
 void Rand_Gen::setN(int x)
 {
@@ -129,6 +130,10 @@ int Rand_Gen::getHU_total()
 {
     return HU_total;
 }
+int Rand_Gen::getSU_total()
+{
+    return SU_total;
+}
 int Rand_Gen::id_earth_total()
 {
     return id_earth;
@@ -136,6 +141,10 @@ int Rand_Gen::id_earth_total()
 int Rand_Gen::id_alien_total()
 {
     return id_alien;
+}
+int Rand_Gen::id_ally_total()
+{
+    return id_ally;
 }
 //for earth army:
 //arr[9]&&arr[10]---->power 
@@ -225,13 +234,13 @@ armyUnit* Rand_Gen::generate_alien_unit(int join_time)//generate a random alien 
 
 saverUnit* Rand_Gen::generate_SU(int join_time)
 {
-    if (id_earth != 1000)
+    if (id_ally != 4250)
     {
         int random_power = (rand() % (SU_pow1 - SU_pow0 + 1) + SU_pow0);     //--> random power
         int random_health = (rand() % (SU_Health1 - SU_Health0 + 1) + SU_Health0);  //--> random health
         int random_attack_capacity = (rand() % (SU_cap1 - SU_cap0 + 1) + SU_cap0);  //--> ramdom capacity
-
-        saverUnit* su = new saverUnit(id_earth++, join_time, random_health, random_power, random_attack_capacity, saver_unit, this->game_ptr);   //--> generate SU
+        SU_total++;
+        saverUnit* su = new saverUnit(id_ally++, join_time, random_health, random_power, random_attack_capacity, saver_unit, this->game_ptr);   //--> generate SU
         return su;
     }
     return nullptr;

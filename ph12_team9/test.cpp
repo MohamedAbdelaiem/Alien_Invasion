@@ -10,7 +10,7 @@ using namespace std;
 		string line = "";
 		ifstream file;
 		file.open("AlienInvasion.txt");
-		//// Set the console text color to bright green
+		//// Set the console text color to bright red
 		std::cout << "\033[91m";
 		
 		// Print the header with a bold font
