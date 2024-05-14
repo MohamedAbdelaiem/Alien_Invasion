@@ -179,6 +179,8 @@ void Game::simulate()
         }
         if (check_winner(check_draw))
         {
+            if (aliens->get_count() != 0 && humans->get_count() == 0)
+                this->kill_UML();
             outfile << "//////////////////////////////////////////////////Earth Army////////////////////////////////////////////////////" << endl;
             outfile << "Total Earth soldier: " << random_generator->getES_total() << endl;
             outfile << "Total Earth tank: " << random_generator->getET_total() << endl;
@@ -676,6 +678,19 @@ void Game::checkSuHelping()
 void Game::increase_total_number_of_infected(int count)
 {
     total_infected_soldiers += count;
+}
+
+void Game::kill_UML()
+{
+    armyUnit* unit; int x;
+    while (UML->dequeue(unit, x))
+    {
+        if (unit->get_infection())
+            decrease_numOfInfectedSoldiersInUML();
+        unit->setHealth(0);
+        add_to_killed_list(unit);
+    }
+
 }
 
 

@@ -58,6 +58,7 @@ public:
 	bool check_winner(bool flag=true);
 	void checkSuHelping();    //--> chaeck if the Earth Army need to help and edit the boolen (SU_Healping) 
 	void increase_total_number_of_infected(int count);
+	void kill_UML(); //--> kill all unit in UML
 	~Game();
 
 
