@@ -106,6 +106,10 @@ public:
 				return false;
 		}
 	}
+	void set_starting_dequeue_first() //--> to start dequeue from first
+	{
+		delete_first_or_last_flag = true;
+	}
 
 	
 };

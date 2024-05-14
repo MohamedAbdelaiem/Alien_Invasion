@@ -97,8 +97,17 @@ bool EarthArmy::attack()
 	//========================================================================//
 	//Attacking for EarthSoldier
 	earthSoldier* ES;
-	if(soldiers->peek(ES))   //--> peek one EarthSoldier from ES list 
-		flag1=ES->Attack();        //--> make it attack 
+	if (soldiers->peek(ES))   //--> peek one EarthSoldier from ES list 
+	{
+		if (ES->get_infection())  //--> if the soldier is infected remove him from list and add him to not attacking himself 
+		{
+			soldiers->dequeue(ES);
+			flag1 = ES->Attack();        //--> make it attack 
+			soldiers->enqueue(ES);
+		}
+		else
+			flag1 = ES->Attack();        //--> make it attack 
+	}
 	//============================================
 	 
 	
@@ -216,7 +225,6 @@ int EarthArmy::RandomInfection(int count)  //random infect EarthSolddier
 	}
 	return counter;   //return number of new infected soldiers
 }
-
 
 
 EarthArmy::~EarthArmy()  //Destructor

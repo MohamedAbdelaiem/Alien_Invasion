@@ -218,6 +218,11 @@ int AlienArmy::get_count() const
 	return array_monsters->get_count()+queue_drones->get_count()+allien_soldier->get_count();
 }
 
+void AlienArmy::set_starting_dequeue_drones_first()
+{
+	queue_drones->set_starting_dequeue_first();
+}
+
 
 
 

@@ -32,6 +32,7 @@ public:
 	bool peek_two_drones(armyUnit*& drone1, armyUnit*& drone2);//peek two units(drones)
 	bool peek_unit(armyUnit*& unit) const;//peek a general  unit
 	virtual int get_count() const;
+	void set_starting_dequeue_drones_first(); //-->to make sure to dequeue from fist of the drones QUEUE
 	~AlienArmy();
 };
 #endif
