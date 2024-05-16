@@ -16,7 +16,7 @@ Game::Game(string fileName,bool silentMode,string outfile)//initializes the syst
     numOfHealedUnits = 0;
     numOfInfectedSoldiers = 0;
     infected_in_uml = 0;
-
+    total_infected_soldiers = 0;
     loadFromInput(fileName);
     generate_output_file(outfile);
     SU_Helping = false;
@@ -177,7 +177,7 @@ void Game::simulate()
                     break;
                 }
                 c= _getch();
-            };
+            }
         }
         if (check_winner(check_draw))
         {
@@ -192,14 +192,14 @@ void Game::simulate()
             outfile << "Total Earth gunnery: " << random_generator->getEG_total() << endl;
             outfile << "Total Earth HealUnits: " << random_generator->getHU_total() << endl;
             outfile << "Total Earth Healed Units: " << get_numOfHealedUnits() << endl;
-            outfile << "Total Infected Earth Soldiers: " << numOfInfectedSoldiers << endl;
+            outfile << "Total Infected Earth Soldiers: " << total_infected_soldiers << endl;
             outfile << "Total Units Still in The UML is: " << UML->getCount() << endl;
             if (random_generator->getES_total() != 0)
                 outfile << "percentage destructed Earth soldier: " << ((float)killed_ES / (random_generator->getES_total())) * 100 << "%" << endl;
             else
                 outfile << "percentage destructed Earth soldier: " << "there is no Earth soldiers generated" << endl;
             if (random_generator->getES_total() != 0)
-                outfile << "percentage Infected Earth soldier: " << ((float)numOfInfectedSoldiers / (random_generator->getES_total())) * 100 << "%" << endl;
+                outfile << "percentage Infected Earth soldier: " << ((float)total_infected_soldiers / (random_generator->getES_total())) * 100 << "%" << endl;
             else
                 outfile << "percentage destructed Earth soldier: " << "there is no Earth soldiers generated" << endl;
             if (random_generator->getET_total() != 0)
