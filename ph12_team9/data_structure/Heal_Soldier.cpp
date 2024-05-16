@@ -11,8 +11,11 @@ Heal_Soldier::Heal_Soldier(int id, int join_time, int Health, int power, int att
 
 bool Heal_Soldier::Attack()
 {
+
+	// HU ID heales [ Healed IDs ]
+
 	priQueue<armyUnit*>* uml = game_ptr->get_UML();
-	LinkedQueue<armyUnit*>* tempList = new LinkedQueue<armyUnit*>;
+	LinkedQueue<armyUnit*> tempList ;
 	EarthArmy* EarthPtr = game_ptr->get_humans_pointer();
 	bool attack_flag = false;
 	armyUnit* unit;
@@ -51,12 +54,18 @@ bool Heal_Soldier::Attack()
 						game_ptr->decrease_numOfInfectedSoldiers();
 						game_ptr->decrease_numOfInfectedSoldiersInUML();
 					}
+
+					if (!unit->isHealed())  //--> if the unit wasn't healed before
+					{
+						game_ptr->incr_numOfHealedUnits();  //--> increase number of healed units
+						unit->setHealed(); //--> mark the unit as healed
+					}
+
 					EarthPtr->addUnit(unit);
-					game_ptr->incr_numOfHealedUnits();
 				}
 				else
 				{
-					tempList->enqueue(unit); //--> enquee the healed unit wasn't healed completely put it in a temp list
+					tempList.enqueue(unit); //--> if the healed unit wasn't healed completely put it in a temp list
 				}
 				attack_flag = true;
 				i++;
@@ -66,7 +75,7 @@ bool Heal_Soldier::Attack()
 	{
 		cout << "]\n";
 	}
-	while (tempList->dequeue(unit))   //--> return the units in the temp list to the uml
+	while (tempList.dequeue(unit))   //--> return the units in the temp list to the uml
 	{
 		if (earthSoldier* es = dynamic_cast<earthSoldier*> (unit))
 		{
@@ -81,6 +90,6 @@ bool Heal_Soldier::Attack()
 		game_ptr->add_to_killed_list(this);
 	}
 	else EarthPtr->addUnit(this);
-	delete tempList;
+
 	return attack_flag;
 }

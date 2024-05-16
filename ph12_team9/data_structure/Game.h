@@ -27,7 +27,7 @@ private:
 	bool silentMode;
 	int treshold;
 	int numGen_SU;
-	bool SU_Helping;
+	bool SU_Helping;    // boolean that determine if the ally army helping Earth army now or not
 	
 public:
 	Game(string fileName ,bool silentMode,string out_file);
@@ -55,7 +55,7 @@ public:
 	bool EarthArmy_Need_TO_Help() const;   //--> chaeck if the Earth Army need to help 
 	void generate_output_file(string filename);
 	void add_to_file(armyUnit* unit);
-	bool check_winner(bool flag=true);
+	bool check_winner(bool flag=true) const;
 	void checkSuHelping();    //--> chaeck if the Earth Army need to help and edit the boolen (SU_Healping) 
 	void increase_total_number_of_infected(int count);
 	void kill_UML(); //--> kill all unit in UML

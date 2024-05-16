@@ -615,7 +615,7 @@ AllyArmy* Game::get_Ally_pointer() const
 bool Game::EarthArmy_Need_TO_Help() const
 {
     //int total_alive_earthArmy_units = humans->get_count() + UML->getCount();
-
+    // Assume the percentage between 1- total allive ES and 2- total alive infected ES
     int total_alive_earthArmy_units = (random_generator->getES_total() - killed_ES);    //--> total earth soldiers
     int total_infected_units = this->numOfInfectedSoldiers;    //--> total infected soldiers
     return (total_alive_earthArmy_units!=0 && (total_infected_units / float(total_alive_earthArmy_units)*100 >= treshold));   //--> if the percentage of the infected to all soldiers reaches the treshold return treu
@@ -634,7 +634,7 @@ void Game::add_to_file(armyUnit* unit)
     
 }
 
-bool Game::check_winner(bool draw )
+bool Game::check_winner(bool draw ) const
 {
     if (current_time >= 40)
     {

@@ -23,6 +23,7 @@ armyUnit::armyUnit(int id, int join_time, int Health, int power, int attackC,uni
     this->orig_health = Health;
     time_joining_UML = 0;
     infection = false;
+    healedBefore = false;
 }
 void armyUnit::setID(int id)
 {
@@ -144,7 +145,7 @@ void armyUnit::set_time_UML(int time)
     this->time_joining_UML = time;
 }
 
-int armyUnit::get_time_UML()
+int armyUnit::get_time_UML() const
 {
     return this->time_joining_UML;
 }
@@ -168,6 +169,16 @@ void armyUnit::set_immunity(bool flag)
 bool armyUnit::get_immunity()const
 {
     return immunity;
+}
+
+void armyUnit::setHealed() 
+{
+    healedBefore = true;
+}
+
+bool armyUnit::isHealed() const
+{
+    return healedBefore;
 }
 
 

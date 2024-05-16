@@ -13,6 +13,8 @@ earthSoldier::earthSoldier(int id, int join_time, int Health, int power, int att
 
 bool earthSoldier::Attack()
 {
+	// ES ID shots [AS IDs]
+
 	bool flag_attack = false;
 
 	if (!game_ptr->getSilentMode())
@@ -27,11 +29,21 @@ bool earthSoldier::Attack()
 		EarthArmyList = this->game_ptr->get_humans_pointer();    //get pointer to the EarthArmy from the game class
 		armyUnit* ES = new earthSoldier;   // allocate an ES to do dynamic_cast
 		armyUnit* E = ES;
+
+		/*
+		* we make temp queue to keep the infected ES at the front of its list  (Assumption)
+		*/
+		LinkedQueue<earthSoldier*> temp;  //temp queue  
+		EarthArmyList->deleteUnit(ES);
+		temp.enqueue(dynamic_cast<earthSoldier*> (ES));
+		//----------------------------------------------
+
 		for (int i = 0; i < this->attackCapacity; i++)
 		{
 			EarthArmyList->deleteUnit(ES);         //take a ES from its list to be attacked
 			if (ES)
 			{
+
 				ES->set_attacked_time(game_ptr->get_current_time());   //set the first attacked time 
 				ES->set_first_attack_delay();                          //set the first attcked delay time
 
@@ -40,7 +52,7 @@ bool earthSoldier::Attack()
 					cout << ES << " ";  //-> print this attacked unit
 				}
 
-				double damage = (float(this->Power) * this->health / 100) / sqrt(ES->getHealth());   //calc the damage
+				float damage = (float(this->Power) * this->health / 100) / sqrt(ES->getHealth());   //calc the damage
 				ES->setHealth(ES->getHealth() - damage);                                     //set the health after the demage
 				if (ES->getHealth() > 0)
 				{
@@ -57,8 +69,18 @@ bool earthSoldier::Attack()
 				break;
 			}
 		}
-		delete E;
+		ES = E;
 		earthSoldier* es;
+		while (ES)
+		{
+			EarthArmyList->deleteUnit(ES);   //--> delete all ES from its list and enqueue it in the temp queue after the attacking infected ES
+			if (ES)
+			{
+				temp.enqueue(dynamic_cast<earthSoldier*> (ES));
+			}
+		}
+		while (temp.dequeue(es)) EarthArmyList->addUnit(es);
+		delete E;
 		
 		while (templist.dequeue(es))
 		{

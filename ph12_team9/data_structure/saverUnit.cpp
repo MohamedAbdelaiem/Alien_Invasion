@@ -10,6 +10,8 @@ saverUnit::saverUnit(int id, int join_time, int Health, int power, int attackC, 
 
 bool saverUnit::Attack()
 {
+	// SU shots [ AS IDs ] 
+	
 	bool flag_attack = false;
 
 	if (!game_ptr->getSilentMode())

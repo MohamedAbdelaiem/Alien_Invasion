@@ -19,9 +19,10 @@ protected:
 	int attacked_time;
 	int destroyed_time;
 	int DF, Dd, Db;//first attacked delay,destruction delay,battle time
-	Game* game_ptr;
-	int time_joining_UML;
+	Game* game_ptr; // pointeer to the game class 
+	int time_joining_UML;  // the time wich the unit (ES , ET) joined the UML
 	bool infection,immunity;
+	bool healedBefore;
 public:
 	armyUnit(int id);
 	armyUnit(int id, int join_time, int Health, int power, int attackC,unitType type,Game*game );
@@ -50,12 +51,15 @@ public:
 	virtual int get_first_attack_delay() const;
 	virtual int get_battle_time() const;
 	virtual bool Attack()=0;
-	void set_time_UML(int time);
-	int get_time_UML();
+	virtual void set_time_UML(int time);
+	virtual int get_time_UML() const;  // get the time joining UML
 	virtual void set_infection(bool flag);
 	virtual bool get_infection() const;
 	virtual void set_immunity(bool flag);
 	virtual bool get_immunity() const;
+	virtual void setHealed() ;
+	virtual bool isHealed() const;
+	
 	friend ostream& operator<<(ostream& os,armyUnit* ptr);
 };
 #endif

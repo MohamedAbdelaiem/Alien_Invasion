@@ -8,6 +8,7 @@ EarthArmy::EarthArmy()
 	soldiers = new LinkedQueue<earthSoldier*>;
 	tanks = new ArrayStack<tank*>;
 	HL = new ArrayStack<Heal_Soldier*>;
+	ET_start_to_attack_AS = false;
 }
 
 void EarthArmy::addUnit(armyUnit* unit)
@@ -99,13 +100,6 @@ bool EarthArmy::attack()
 	earthSoldier* ES;
 	if (soldiers->peek(ES))   //--> peek one EarthSoldier from ES list 
 	{
-		if (ES->get_infection())  //--> if the soldier is infected remove him from list and add him to not attacking himself 
-		{
-			soldiers->dequeue(ES);
-			flag1 = ES->Attack();        //--> make it attack 
-			soldiers->enqueue(ES);
-		}
-		else
 			flag1 = ES->Attack();        //--> make it attack 
 	}
 	//============================================
@@ -135,7 +129,7 @@ bool EarthArmy::attack()
 
 
 
-int EarthArmy::getCountForES()
+int EarthArmy::getCountForES() const
 {
 	return this->soldiers->get_count();
 }
@@ -191,7 +185,7 @@ bool EarthArmy::peek_unit(armyUnit*& unit) const
 
 int EarthArmy::get_count() const
 {
-	return soldiers->get_count()+Gunneries->getCount()+ tanks->get_count();
+	return soldiers->get_count()+Gunneries->getCount()+ tanks->get_count()+ HL->get_count();
 }
 
 int EarthArmy::RandomInfection(int count)  //random infect EarthSolddier 

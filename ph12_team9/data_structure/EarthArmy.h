@@ -13,10 +13,10 @@ class Game;
 class EarthArmy : public Army
 {
 private:
-	priQueue<Gunnery*>* Gunneries;
-	LinkedQueue<earthSoldier*>* soldiers;
-	ArrayStack<tank*>* tanks;
-	ArrayStack<Heal_Soldier*>*HL;
+	priQueue<Gunnery*>* Gunneries;  //--> EG List
+	LinkedQueue<earthSoldier*>* soldiers; //--> ES List
+	ArrayStack<tank*>* tanks; //--> tanks List
+	ArrayStack<Heal_Soldier*>*HL;  //--> Heal List
 	
 public:
 	EarthArmy();
@@ -24,10 +24,11 @@ public:
 	virtual void deleteUnit(armyUnit*& unit) ;  //--> delete a unit
 	virtual void print() const ;   //--> print all earth army lists
 	virtual bool attack() ;  //--> make all  earth army units attack 
-	virtual int getCountForES() ;  //-->get the number of Earth Soldiers
+	virtual int getCountForES() const ;  //-->get the number of Earth Soldiers
 	bool peek_unit(armyUnit*& unit) const;     //--> peek a unit from its list
-	virtual int get_count() const;//Get count for the total Army Units
+	virtual int get_count() const; //--> Get count for the total Army Units
 	int RandomInfection(int count);
+	bool ET_start_to_attack_AS;
 	~EarthArmy();
 
 };
