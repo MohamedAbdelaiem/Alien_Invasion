@@ -185,7 +185,7 @@ bool EarthArmy::peek_unit(armyUnit*& unit) const
 
 int EarthArmy::get_count() const
 {
-	return soldiers->get_count()+Gunneries->getCount()+ tanks->get_count()+ HL->get_count();
+	return soldiers->get_count()+Gunneries->getCount()+ tanks->get_count();
 }
 
 int EarthArmy::RandomInfection(int count)  //random infect EarthSolddier 
