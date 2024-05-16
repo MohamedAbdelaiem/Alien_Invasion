@@ -16,6 +16,7 @@ Game::Game(string fileName,bool silentMode,string outfile)//initializes the syst
     numOfHealedUnits = 0;
     numOfInfectedSoldiers = 0;
     infected_in_uml = 0;
+
     loadFromInput(fileName);
     generate_output_file(outfile);
     SU_Helping = false;

@@ -31,7 +31,7 @@ public:
 	bool delete_first_or_last_drone(Drones*& drone1);//delete drone once from front and once from back
 	bool peek_two_drones(armyUnit*& drone1, armyUnit*& drone2);//peek two units(drones)
 	bool peek_unit(armyUnit*& unit) const;//peek a general  unit
-	virtual int get_count() const;
+	virtual int get_count() const;		//Get count for the total Army Units
 	void set_starting_dequeue_drones_first(); //-->to make sure to dequeue from fist of the drones QUEUE
 	~AlienArmy();
 };

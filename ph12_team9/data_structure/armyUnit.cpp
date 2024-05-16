@@ -184,7 +184,7 @@ ostream& operator<<(ostream& os,   armyUnit* ptr)
     }
     else if (ptr->get_immunity())
     {
-        std::cout << "\033[92;1m"; // Set text color to green
+        std::cout << "\033[92;1m"; // Set text color to light green
         os << ptr->getID();
         std::cout << "\033[0m";
     }
@@ -195,8 +195,6 @@ ostream& operator<<(ostream& os,   armyUnit* ptr)
         std::cout << "\033[0m";
     }
     else    os << ptr->getID();
-    if (ptr->get_immunity())
-        ptr->set_infection(false);
     return os;
 }
 

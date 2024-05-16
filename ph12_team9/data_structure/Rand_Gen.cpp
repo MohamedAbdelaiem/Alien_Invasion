@@ -94,55 +94,55 @@ void Rand_Gen::SU_cap(int x0, int x1)
     this->SU_cap0 = x0;
     this->SU_cap1 = x1;
 }
-int Rand_Gen::get_E_Pow0()
+int Rand_Gen::get_E_Pow0()const
 {
     return E_Pow0;
 }
-int Rand_Gen::get_E_Pow1()
+int Rand_Gen::get_E_Pow1()const
 {
     return E_Pow1;
 }
-int Rand_Gen::getAD_total()
+int Rand_Gen::getAD_total()const
 {
     return AD_total;
 }
-int Rand_Gen::getAM_total()
+int Rand_Gen::getAM_total()const
 {
     return AM_total;
 }
-int Rand_Gen::getAS_total()
+int Rand_Gen::getAS_total()const
 {
     return AS_total;
 }
-int Rand_Gen::getES_total()
+int Rand_Gen::getES_total()const
 {
     return ES_total;
 }
-int Rand_Gen::getET_total()
+int Rand_Gen::getET_total()const
 {
     return ET_total;
 }
-int Rand_Gen::getEG_total()
+int Rand_Gen::getEG_total()const
 {
     return EG_total;
 }
-int Rand_Gen::getHU_total()
+int Rand_Gen::getHU_total()const
 {
     return HU_total;
 }
-int Rand_Gen::getSU_total()
+int Rand_Gen::getSU_total()const
 {
     return SU_total;
 }
-int Rand_Gen::id_earth_total()
+int Rand_Gen::id_earth_total()const
 {
     return id_earth;
 }
-int Rand_Gen::id_alien_total()
+int Rand_Gen::id_alien_total()const
 {
     return id_alien;
 }
-int Rand_Gen::id_ally_total()
+int Rand_Gen::id_ally_total()const
 {
     return id_ally;
 }

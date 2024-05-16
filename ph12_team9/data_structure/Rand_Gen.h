@@ -46,19 +46,19 @@ public:
 	void SU_Health(int x0,int x1); //--> set the ranges of the ally army Health
 	void SU_pow(int x0,int x1);	//--> set the ranges of the ally army powers
 	void SU_cap(int x0,int x1);		//--> set the ranges of the ally army capacity
-	int get_E_Pow0();   
-	int get_E_Pow1();
-	int getAD_total();
-	int getAM_total();
-	int getAS_total();
-	int getES_total();
-	int getET_total();
-	int getEG_total();
-	int getHU_total();
-	int getSU_total();
-	int id_earth_total();
-	int id_alien_total();
-	int id_ally_total();
+	int get_E_Pow0()const;
+	int get_E_Pow1()const;
+	int getAD_total()const;
+	int getAM_total()const;
+	int getAS_total()const;
+	int getES_total()const;
+	int getET_total()const;
+	int getEG_total()const;
+	int getHU_total()const;
+	int getSU_total()const;
+	int id_earth_total()const;
+	int id_alien_total()const;
+	int id_ally_total()const;
 	armyUnit* generate_earth_unit(int join_time); //--> generate an earth unit
 	armyUnit* generate_alien_unit(int join_time); //--> generate an alien unit
 	saverUnit* generate_SU(int join_time);  //--> generate a saver unit

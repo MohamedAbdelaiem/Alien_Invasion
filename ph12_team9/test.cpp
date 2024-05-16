@@ -5,35 +5,31 @@
 #include <string>
 #include"data_structure/Game.h"
 using namespace std;
-	void printWithDelay() 
-	{
-		string line = "";
-		ifstream file;
-		file.open("AlienInvasion.txt");
-		//// Set the console text color to bright red
-		std::cout << "\033[91m";
-		
-		// Print the header with a bold font
-		std::cout << "\033[1m";
-		
-
-		if (file.is_open())
-		{
-			while (getline(file, line))
-			{
-				cout << line << endl;
-				Sleep(100);
-			}
-		}
-		//// Reset console text color
-		std::cout << "\033[0m"; // Reset font style
-	}
 int main()
 {
-
-	printWithDelay();
-	//PlaySound(TEXT("WarEntrance.wav"), NULL, SND_FILENAME | SND_SYNC);
+	///////////////////////////////////////////////////////////////////////////////////
+	string line = "";
 	ifstream file;
+	file.open("AlienInvasion.txt");
+	//// Set the console text color to bright red
+	std::cout << "\033[91m";
+
+	// Print the header with a bold font
+	std::cout << "\033[1m";
+
+	if (file.is_open())
+	{
+		while (getline(file, line))
+		{
+			cout << line << endl;
+			Sleep(100);
+		}
+	}
+	//// Reset console text color
+	std::cout << "\033[0m"; // Reset font style
+	file.close();
+	///////////////////////////////////////////////////////////////////////////////////
+
 	string fileName;
 	string fileName_out;
 	bool ModeSilent;
@@ -52,7 +48,7 @@ int main()
 	{
 		ModeSilent = true;
 	}
-
+	///////////////////////////////////////////////////////////////////////////////////
 	//generate is true
 	cout << "Enter the file name to generate units: ";
 	while (true)
@@ -70,10 +66,27 @@ int main()
 		}
 	}
 	file.close();
+	////////////////////////////////////////////////////////////////////////////////////
 	cout << "Enter the output file name: ";
-	cin >> fileName_out;
+	while (true)
+	{
+		cin >> fileName_out;
+		cout << endl;
+		file.open(fileName_out + ".txt");
+		if (file.is_open())
+		{
+			cout << "The file is already exists Enter The name again:";
+			file.close();
+		}
+		else
+		{
+			break;
+		}
+	}
+	/////////////////////////////////////////////////////////////////////////////////////
 	Game g1(fileName,ModeSilent, fileName_out);
 		g1.simulate();
+	//////////////////////////////////////////////////////////////////////////////////////
 	return 0;
 }
 

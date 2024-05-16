@@ -10,6 +10,9 @@ Drones::Drones(int id, int join_time, int Health, int power, int attackC,unitTyp
 
 bool Drones::Attack()
 {
+	// AD ID shots [ EG IDs ] [ET IDs] 
+
+
 	ArrayStack<tank*>temp_list_tank;    //temp list for tanks
 	LinkedQueue<Gunnery*>temp_list_gunnery; //temp list fir gunneries
 	LinkedQueue<int>print;   //List fo printing all attacked units

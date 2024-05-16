@@ -26,7 +26,7 @@ public:
 	virtual bool attack() ;  //--> make all  earth army units attack 
 	virtual int getCountForES() ;  //-->get the number of Earth Soldiers
 	bool peek_unit(armyUnit*& unit) const;     //--> peek a unit from its list
-	virtual int get_count() const;
+	virtual int get_count() const;//Get count for the total Army Units
 	int RandomInfection(int count);
 	~EarthArmy();
 

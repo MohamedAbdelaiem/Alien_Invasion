@@ -11,6 +11,6 @@ public:
 	virtual void print() const = 0;//print all lists
 	virtual bool attack() = 0;
 	virtual bool peek_unit(armyUnit*& unit) const = 0;//peek a general  unit
-	virtual int get_count() const =0;
+	virtual int get_count() const =0;//Get count for the total Army Units
 };
 #endif
