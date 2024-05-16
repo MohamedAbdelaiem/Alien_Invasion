@@ -30,13 +30,6 @@ bool earthSoldier::Attack()
 		armyUnit* ES = new earthSoldier;   // allocate an ES to do dynamic_cast
 		armyUnit* E = ES;
 
-		/*
-		* we make temp queue to keep the infected ES at the front of its list  (Assumption)
-		*/
-		LinkedQueue<earthSoldier*> temp;  //temp queue  
-		EarthArmyList->deleteUnit(ES);
-		temp.enqueue(dynamic_cast<earthSoldier*> (ES));
-		//----------------------------------------------
 
 		for (int i = 0; i < this->attackCapacity; i++)
 		{
@@ -69,18 +62,9 @@ bool earthSoldier::Attack()
 				break;
 			}
 		}
-		ES = E;
-		earthSoldier* es;
-		while (ES)
-		{
-			EarthArmyList->deleteUnit(ES);   //--> delete all ES from its list and enqueue it in the temp queue after the attacking infected ES
-			if (ES)
-			{
-				temp.enqueue(dynamic_cast<earthSoldier*> (ES));
-			}
-		}
-		while (temp.dequeue(es)) EarthArmyList->addUnit(es);
+
 		delete E;
+		earthSoldier* es;
 		
 		while (templist.dequeue(es))
 		{

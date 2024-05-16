@@ -100,7 +100,27 @@ bool EarthArmy::attack()
 	earthSoldier* ES;
 	if (soldiers->peek(ES))   //--> peek one EarthSoldier from ES list 
 	{
-			flag1 = ES->Attack();        //--> make it attack 
+		if (ES->get_infection())   // if the ES was infected
+		{
+			/*			(Assumption)
+				we keep the infected ES which attack now at the front of the ES list as before Atacking
+			*/
+
+			LinkedQueue<earthSoldier*> temp;   // temp queue
+			earthSoldier* es;
+			soldiers->dequeue(es);    //--> dequeue the attacking infected ES
+			temp.enqueue(es);			//--> put it at the front of the temp queue
+
+			flag1 = ES->Attack();  //--> make it attack the other ESs
+
+			while (soldiers->dequeue(es)) temp.enqueue(es);    //--> dequeue all other ESs from the original list and enqueue to the temp queue
+			while (temp.dequeue(es)) soldiers->enqueue(es);    //--> dequeue all ESs including the one wich attack from the temp queue and enqueue to the original list
+
+		}
+		else
+		{
+			flag1 = ES->Attack();  //--> make it attack 
+		}
 	}
 	//============================================
 	 

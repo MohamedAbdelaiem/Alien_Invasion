@@ -1,4 +1,4 @@
-	#include "Heal_Soldier.h"
+#include "Heal_Soldier.h"
 #include "Game.h"
 
 Heal_Soldier::Heal_Soldier(int id):armyUnit(id)
