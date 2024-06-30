@@ -1,7 +1,5 @@
-👽 AlienInvasion 🛸🌌
 
-Description:
-
+## 👽 AlienInvasion 🛸🌌
 AlienInvasion is a thrilling C++ project that simulates a war between aliens and humans👽👾. 
 
 Utilizing various data structures(stacks,queues,linkedlist,array,priqueue)🔖📊. 
@@ -16,33 +14,36 @@ second:Alien Army------>we will fight it to save our planet.
 
 third:Ally Army------->Our aid army to kill the aliens army.
 
-There are two modes in this game: 
-
-1-Interactive mode --->This is to see all fights and switches between lists to all units weather healing the unit or attacking it.
+## Types 
+1-Interactive mode:This is to see all fights and switches between lists to all units weather healing the unit or attacking it.
 
 2-silent mode.
-
-Features:
-
-Alien and Human Entities: 👾👨‍🚀 The project simulates both alien and human entities, each with unique characteristics , capabilitiesand abilites  .
+## Features
+Alien and Human Entities:👾👨‍🚀 The project simulates both alien and human entities, each with unique characteristics , capabilitiesand abilites .
 
 Data Structures: 📊 Utilizes advanced data structures such as arrays, linked lists, queues,Priqueues ,and stacks
 to manage entities, resources, ,having knowledge
 about randomizing units and interactions efficiently.
 
 Battle Simulation: ⚔️ Experience fight logic using console application ,Having a strong ability to manage pointers in various lists and how to move a unit from a list to another list without a conflict .
-
-
-Contributing:
-
+## Contriputing
 Contributions to AlienInvasion are welcome! If you have ideas for improvements📊, bug fixes💡, or new features🔭, feel free to fork the repository, make your changes, and submit a pull request💡.
+## Authors
+•Mohamed Abdelaziem
 
-Authors:
+•Hazem Emam
 
--Mohamed Abdelaziem Sayed
+•Abdallah Ayman
 
--Hazem Ahmed
+## Contact📲
+For any inquiries or issues, please contact:
 
--Abdallah Ayman
+•Mohamed Abdelaziem: mohamedabdelaziem96@gmail.com
 
-This project is for educational and entertainment purposes only👽🔭
+•Hazem Emam: hemam8560@gmail.com
+
+•Abdallah Ayman: abdallah.mohamed03@eng-st.cu.edu.eg
+
+Enjoy creating and playing with Alien Invasion!
+#
+This README provides an overview of the project, its features, installation instructions, and contact information. If you have any specific preferences or additional details you'd like included, feel free to let me know!
